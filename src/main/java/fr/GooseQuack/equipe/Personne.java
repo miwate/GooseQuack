@@ -19,7 +19,7 @@ public abstract class Personne {
 
 
     /**
-     * Constructruit une Personne
+     * Construit une Personne
      * 
      * @param _nom le nom de famille (ne doit pas être null)
      * @param _prenom le prénom (ne doit pas être null)
