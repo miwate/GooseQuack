@@ -20,6 +20,7 @@ public enum Cout {
         return nom;
     }
 
+    // On en a besoin pour créer le tableau couts dans Projet
     public static int nbTypes() {
         return values().length;
     }
