@@ -4,7 +4,6 @@ import java.util.Objects;
 
 /**
  * Classe abstraite d'une personne avec son nom, son prénom, et son âge.
- * Les personnes doivent être majeures (>= 18 ans) pour exercer un métier.
  * 
  * @author William (miwate)
  * @version 1.0
