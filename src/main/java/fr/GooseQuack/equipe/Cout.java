@@ -7,8 +7,8 @@ public enum Cout {
 
     private final String nom;
 
-    Cout(String _nom) {
-        this.nom = _nom;
+    Cout(String nom) {
+        this.nom = nom;
     }
 
     public String getNom() {
