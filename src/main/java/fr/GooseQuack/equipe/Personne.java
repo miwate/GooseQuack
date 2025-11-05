@@ -21,23 +21,23 @@ public abstract class Personne {
     /**
      * Construit une Personne
      * 
-     * @param _nom le nom de famille (ne doit pas être null)
-     * @param _prenom le prénom (ne doit pas être null)
-     * @param _age l'âge (doit être supérieur à 18)
+     * @param nom le nom de famille (ne doit pas être null)
+     * @param prenom le prénom (ne doit pas être null)
+     * @param age l'âge (doit être supérieur à 18)
      * @throws NullPointerException si le nom ou le prénom est null
      * @throws IllegalArgumentException si l'âge n'est pas supérieur à 18
      */
-    protected Personne(String _nom, String _prenom, int _age) {
-        Objects.requireNonNull(_nom, "Le nom ne peut pas être null");
-        this.nom = _nom;
+    protected Personne(String nom, String prenom, int age) {
+        Objects.requireNonNull(nom, "Le nom ne peut pas être null");
+        this.nom = nom;
 
-        Objects.requireNonNull(_prenom, "Le prénom ne peut pas être null");
-        this.prenom = _prenom;
+        Objects.requireNonNull(prenom, "Le prénom ne peut pas être null");
+        this.prenom = prenom;
 
-        if (_age < 18) {
+        if (age < 18) {
             throw new IllegalArgumentException("L'âge doit être >= 18");
         }
-        this.age = _age;
+        this.age = age;
     }
 
     public String getNom() {
@@ -55,13 +55,13 @@ public abstract class Personne {
     /**
      * Met à jour l'âge d'une personne (supérieur à 18 ans)
      * 
-     * @param _age l'âge (doit être supérieur à 18)
+     * @param age l'âge (doit être supérieur à 18)
      * @throws IllegalArgumentException si l'âge n'est pas supérieur à 18
      */
-    public void setAge(int _age) {
-        if (_age < 18) {
+    public void setAge(int age) {
+        if (age < 18) {
             throw new IllegalArgumentException("L'âge doit être >= 18");
         }
-        this.age = _age;
+        this.age = age;
     }
 }

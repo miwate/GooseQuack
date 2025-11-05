@@ -9,8 +9,8 @@ public enum Secteur {
 
     private final String nom;
 
-    Secteur(String _nom) {
-        this.nom = _nom;
+    Secteur(String nom) {
+        this.nom = nom;
     }
 
     public String getNom() {

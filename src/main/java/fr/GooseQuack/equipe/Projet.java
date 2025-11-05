@@ -14,16 +14,16 @@ public class Projet {
 
     private final int[] couts;
 
-    public Projet(String _titre, String _description, Secteur _secteur) {
+    public Projet(String titre, String description, Secteur secteur) {
         
-        Objects.requireNonNull(_titre, "titre must not be null");
-        this.titre = _titre;
+        Objects.requireNonNull(titre, "titre must not be null");
+        this.titre = titre;
 
-        Objects.requireNonNull(_description, "description must not be null");
-        this.description = _description;
+        Objects.requireNonNull(description, "description must not be null");
+        this.description = description;
 
-        Objects.requireNonNull(_secteur, "titre must not be null");
-        this.secteur = _secteur;
+        Objects.requireNonNull(secteur, "titre must not be null");
+        this.secteur = secteur;
 
         this.benefice = 0;
 
@@ -48,18 +48,18 @@ public class Projet {
         return benefice;
     }
 
-    public int getCout(Cout _type) {
-        Objects.requireNonNull(_type, "type must not be null");
-        return couts[_type.ordinal()];
+    public int getCout(Cout type) {
+        Objects.requireNonNull(type, "type must not be null");
+        return couts[type.ordinal()];
     }
 
 
     // Setters
-    public void setBenefice(int _benefice) {
-        if (_benefice < 0) {
+    public void setBenefice(int benefice) {
+        if (benefice < 0) {
             throw new IllegalArgumentException("benefice must be positive");
         }
-        this.benefice = _benefice;
+        this.benefice = benefice;
     }
 
 }
