@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'fr.GooseQuack'
+version = 'dev'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+application {
+    mainClass = 'fr.GooseQuack.Main'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Va falloir faire des tests il me semble, je mets ça là si on en a besoin
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+// Custom pour fastRun.sh mais on en aura pas besoin c'est juste j'en ai besoin là maintenant
+tasks.register('fastRun', JavaExec) {
+    group = 'application'
+    description = 'Runs the application quickly'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'fr.GooseQuack.Main'
+}
