@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'fr.GooseQuack'
-version = 'dev'
+version = '1.0'
 
 java {
     toolchain {
@@ -29,10 +29,3 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-// Custom pour fastRun.sh mais on en aura pas besoin c'est juste j'en ai besoin là maintenant
-tasks.register('fastRun', JavaExec) {
-    group = 'application'
-    description = 'Runs the application quickly'
-    classpath = sourceSets.main.runtimeClasspath
-    mainClass = 'fr.GooseQuack.Main'
-}
