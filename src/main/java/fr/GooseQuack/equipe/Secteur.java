@@ -1,5 +1,11 @@
 package fr.GooseQuack.equipe;
 
+/**
+ * Enumération des secteurs d'activité.
+ * 
+ * @author William (miwate)
+ * @version 1.0
+ */
 public enum Secteur {
     SPORT("Sport"),
     SANTE("Santé"),
