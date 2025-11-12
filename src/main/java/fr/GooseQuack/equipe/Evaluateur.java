@@ -33,7 +33,24 @@ public class Evaluateur extends Personne {
         return specialisation;
     }
 
-    // AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    // renseigner le coût économique d'un projet : à faire
+    /**
+     * Évalue le coût d'un projet en fonction de la spécialisation.
+     * 
+     * @param projet le projet à évaluer (ne doit pas être null)
+     * @return le coût évalué du projet
+     * @throws NullPointerException si le projet est null
+     */
+    public int evaluerCout(Projet projet) {
+        if (projet == null) {
+            throw new NullPointerException("Le projet ne peut pas être null");
+        }
+
+        // AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        // je mets 1000 parce que je sais pas quoi mettre d'autre pour l'instant
+        int cout = 1000;
+
+        return cout;
+
+    }
 
 }
