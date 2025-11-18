@@ -1,10 +1,12 @@
 package fr.GooseQuack.equipe;
 import java.util.EnumSet;
+import java.util.Objects;
 
 /**
  * Classe d'un expert, sous-classe de Personne.
  *
  * @author William (miwate)
+ * @author Drys (lidr05)
  * @version 1.0
  */
 public class Expert extends Personne {
@@ -42,4 +44,16 @@ public class Expert extends Personne {
         return EnumSet.copyOf(competences);
     }
 
+    // Methode - Action : proposition de LEUR SECTEUR
+    public Projet propositionSecteur(String titreProposition, String proposition, Secteur secteur) {
+        Objects.requireNonNull(titreProposition, "Le titre ne peut pas être null");
+        Objects.requireNonNull(proposition, "La proposition ne peut pas être null");
+        Objects.requireNonNull(secteur, "Le secteur ne peut pas être null");
+
+        if (!this.competences.contains(secteur)) {
+            throw new IllegalArgumentException("L'expert " + this.getNom() + " n'est pas compétent dans le secteur " + secteur.getNom());
+        }
+        Projet nouvelleProposition = new Projet(titreProposition, proposition, secteur);
+        return nouvelleProposition;
+    }
 }
