@@ -65,6 +65,9 @@ public class Projet {
         Objects.requireNonNull(type, "Le type ne peut pas être null");
         return couts[type.ordinal()];
     }
+    public int[] getCouts(){
+        return java.util.Arrays.copyOf(this.couts, this.couts.length);
+    }
 
 
     /**
