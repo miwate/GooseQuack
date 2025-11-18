@@ -1,4 +1,8 @@
 # GooseQuack
+## Préalable : Gradle (sur Ubuntu)
+```bash
+sudo apt install gradle
+```
 ## Comment build
 Sur linux (liste non exhaustive de commandes)
 ```bash
