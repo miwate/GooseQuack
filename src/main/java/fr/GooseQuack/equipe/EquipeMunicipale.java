@@ -43,14 +43,22 @@ public class EquipeMunicipale {
 
     // Getters
     public Elu getElu() {
-        return elu;
+        return new Elu(elu.getNom(), elu.getPrenom(), elu.getAge()); // Renvoie une copie pour proteger l'elu
     }
-    public Evaluateur getEvaluateur(Cout cout) {
+    public Evaluateur getEvaluateur(Cout cout) { // L'evaluateur associe a l'index du cout (l'evaluateur du type du cout)
         Objects.requireNonNull(cout, "Le cout ne peut pas être null");
-        return evaluateurs[cout.ordinal()];
+        Evaluateur evaluateur = evaluateurs[cout.ordinal()];
+
+        if (evaluateur == null) {
+            throw new IllegalStateException("Aucun évaluateur trouvé pour la spécialisation: " + cout);
+        }
+        return evaluateur;
     }
     public Evaluateur[] getEvaluateurs() {
-        return evaluateurs;
+        return java.util.Arrays.copyOf(this.evaluateurs, this.evaluateurs.length); // Eviter de retourner la liste pour la securite
+    }
+    public List<Expert> getExperts() {
+        return new java.util.ArrayList<>(this.experts); // Eviter de retourner la liste pour la securite
     }
 
     // Setters
@@ -75,7 +83,7 @@ public class EquipeMunicipale {
         Objects.requireNonNull(expert, "L'expert ne peut pas être null");
 
         if (this.experts.contains(expert)) { // Refuser les doublons
-            throw new IllegalArgumentException("Cet expert existe déjà.");
+            throw new IllegalArgumentException("L'expert" + expert.getNom() + "existe déjà.");
         }
 
         this.experts.add(expert);
