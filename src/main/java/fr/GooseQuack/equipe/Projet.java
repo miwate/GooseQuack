@@ -42,22 +42,19 @@ public class Projet {
         this.couts = new int[Cout.nbTypes()];
     }
 
+    // Getters
     public String getTitre() {
         return titre;
     }
-
     public String getDescription() {
         return description;
     }
-
     public Secteur getSecteur() {
         return secteur;
     }
-
     public int getBenefice() {
         return benefice;
     }
-
     /**
      * Retourne le coût pour un type.
      * @param type le type du coût (économique, social ou environnemental)
@@ -81,6 +78,17 @@ public class Projet {
             throw new IllegalArgumentException("Le bénéfice doit être positif");
         }
         this.benefice = benefice;
+    }
+
+    public void setCout(Cout specialisation, int valeur) {
+        Objects.requireNonNull(specialisation, "Le type de coût (spécialisation) ne peut pas être null");
+
+        if (valeur < 0) {
+            throw new IllegalArgumentException("La valeur du coût doit être positive (ou nulle)");
+        }
+
+        int index = specialisation.ordinal();
+        this.couts[index] = valeur;
     }
 
 }
