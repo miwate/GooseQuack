@@ -6,7 +6,8 @@ import java.util.Objects;
 /**
  * Classe d'un projet avec son titre, sa descrpition, son secteur, son bénéfice et ses coûts.
  * 
- * @author William (miwate), Drys (lidr05)
+ * @author William (miwate)
+ * @author Drys (lidr05)
  * @version 1.0
  */
 public class Projet {
