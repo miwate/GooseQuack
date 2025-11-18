@@ -8,6 +8,7 @@ import java.util.Objects;
  * Classe de l'équipe municipale
  * 
  * @author William (miwate)
+ * @author Drys (lidr05)
  * @version 1.0
  */
 public class EquipeMunicipale {
@@ -50,9 +51,7 @@ public class EquipeMunicipale {
     }
 
     public Evaluateur[] getEvaluateurs() {
-
-    return copy;
-}
+        return evaluateurs;
     }
 
 

@@ -6,6 +6,7 @@ import java.util.Objects;
  * Classe abstraite d'une personne avec son nom, son prénom, et son âge.
  * 
  * @author William (miwate)
+ * @author Drys (lidr05)
  * @version 1.0
  */
 
@@ -39,14 +40,13 @@ public abstract class Personne {
         this.age = age;
     }
 
+    // Getters
     public String getNom() {
         return nom;
     }
-
     public String getPrenom() {
         return prenom;
     }
-
     public int getAge() {
         return age;
     }
@@ -63,4 +63,5 @@ public abstract class Personne {
         }
         this.age = age;
     }
+
 }
