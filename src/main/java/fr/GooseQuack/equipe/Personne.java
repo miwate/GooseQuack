@@ -57,6 +57,7 @@ public abstract class Personne {
      * @param age l'âge (doit être supérieur à 18)
      * @throws IllegalArgumentException si l'âge n'est pas supérieur à 18
      */
+    // Setter / Methode
     public void setAge(int age) {
         if (age < 18) {
             throw new IllegalArgumentException("L'âge doit être >= 18");
@@ -64,4 +65,21 @@ public abstract class Personne {
         this.age = age;
     }
 
+    // Methodes utilitaires (comparaison entre objets)
+    @Override
+    public boolean equals(Object o){
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Personne personne = (Personne) o;
+        return age == personne.age && java.util.Objects.equals(nom, personne.nom) && java.util.Objects.equals(prenom, personne.prenom);
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(nom, prenom, age);
+    }
 }
