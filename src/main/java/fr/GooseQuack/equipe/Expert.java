@@ -12,6 +12,8 @@ import java.util.Objects;
 public class Expert extends Personne {
 
     private EnumSet<Secteur> competences;
+    private String titreProposition;
+    private String proposition;
 
     /**
      * Construit un expert.
@@ -42,6 +44,13 @@ public class Expert extends Personne {
      */
     public EnumSet<Secteur> getCompetences() {
         return EnumSet.copyOf(competences);
+    }
+
+    // Setter : competences
+    public void setCompetences(EnumSet<Secteur> competences) {
+        for (Secteur competence : competences) {
+            this.competences.add(competence);
+        }
     }
 
     // Methode - Action : proposition de LEUR SECTEUR
