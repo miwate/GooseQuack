@@ -31,7 +31,6 @@ public class EquipeMunicipale {
      */
     private final List<Projet> projets;
 
-
     /**
      * 
      */
@@ -60,6 +59,9 @@ public class EquipeMunicipale {
     public List<Expert> getExperts() {
         return new java.util.ArrayList<>(this.experts); // Eviter de retourner la liste pour la securite
     }
+    public List<Projet> getProjets() {
+        return new java.util.ArrayList<>(this.projets); // Eviter de retourner la liste pour la securite
+    }
 
     // Setters
     public void setElu(Elu elu) {
@@ -67,7 +69,7 @@ public class EquipeMunicipale {
         this.elu = elu;
     }
 
-    // Methodes
+    // Methodes sur les attributs
     public void addEvaluateur(Evaluateur evaluateur) {
         Objects.requireNonNull(evaluateur, "L'évaluateur ne peut pas être null");
 
@@ -88,4 +90,12 @@ public class EquipeMunicipale {
 
         this.experts.add(expert);
     }
+
+    // Methodes - Actions a proprement parler
+    public void cycleSimulation(EquipeMunicipale equipe){
+        for (Expert expert : equipe.experts) {
+            expert.propositionSecteur(expert.getTitreProp(), expert.getDescProp(), expert.getCompetence());
+        }
+    }
+
 }
