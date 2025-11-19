@@ -106,8 +106,10 @@ public class EquipeMunicipale {
         
         // Parcours de toutes les propositions des experts
         for (Expert expert : this.getExperts()) {
+            String titre = "Proposition de " +  expert.getPrenom() + expert.getNom() + " (" + expert.getCompetence().getNom() + ")";
+            String description = "Proposition générée pour le secteur " + expert.getCompetence().getNom();
             Projet projetActuel = expert.propositionSecteur(
-                "Proposition de " + expert.getNom(), expert.getDescProp(), expert.getCompetence());
+                titre, description, expert.getCompetence());
         
             // Estimation du cout pour chaque specialisation (Economique, Social et Environnemental)
             for (Evaluateur evaluateur : this.getEvaluateurs()) {
@@ -121,6 +123,7 @@ public class EquipeMunicipale {
             // Ajout dans la liste de projets
             this.addProjet(projetActuel);
             System.out.println("Projet ajouté : " + projetActuel.getTitre());
+            System.out.println("\t ---> Description : " + projetActuel.getDescription());
         }
     }   
 

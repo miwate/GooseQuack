@@ -57,7 +57,7 @@ public abstract class Personne {
      * @param age l'âge (doit être supérieur à 18)
      * @throws IllegalArgumentException si l'âge n'est pas supérieur à 18
      */
-    // Setter / Methode
+    // Setters (pas Nom ou Prenom car final)
     public void setAge(int age) {
         if (age < 18) {
             throw new IllegalArgumentException("L'âge doit être >= 18");
