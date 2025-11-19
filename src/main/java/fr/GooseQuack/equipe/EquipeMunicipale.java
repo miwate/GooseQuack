@@ -22,55 +22,109 @@ public class EquipeMunicipale {
     private final Evaluateur[] evaluateurs;
 
     /** 
-     * ArrayList des experts (taille dynamite)
+     * ArrayList des experts (taille dynamique avec List<Objet>)
      */
     private final List<Expert> experts;
 
     /** 
-     * ArrayList des projets (taille dynamite)
+     * ArrayList des projets (taille dynamique)
      */
     private final List<Projet> projets;
-
 
     /**
      * 
      */
     public EquipeMunicipale() {
-        this.evaluateurs = new Evaluateur[Cout.nbTypes()];
-        this.experts = new ArrayList<Expert>();
-        this.projets = new ArrayList<Projet>();
+        this.evaluateurs = new Evaluateur[Cout.nbTypes()]; // 1 evaluateur par type 
+        this.experts = new ArrayList<Expert>(); // Nombre indetermine d'experts
+        this.projets = new ArrayList<Projet>(); // Nombre indetermine d'experts
     }
 
+    // Getters
     public Elu getElu() {
-        return elu;
+        java.util.Objects.requireNonNull(elu, "L'élu ne peut pas être null");
+        return new Elu(elu.getNom(), elu.getPrenom(), elu.getAge()); // Renvoie une copie pour proteger l'elu
     }
-
-    public Evaluateur getEvaluateur(Cout cout) {
+    public Evaluateur getEvaluateur(Cout cout) { // L'evaluateur associe a l'index du cout (l'evaluateur du type du cout)
         Objects.requireNonNull(cout, "Le cout ne peut pas être null");
-        return evaluateurs[cout.ordinal()];
-    }
+        Evaluateur evaluateur = evaluateurs[cout.ordinal()];
 
+        if (evaluateur == null) {
+            throw new IllegalStateException("Aucun évaluateur trouvé pour la spécialisation: " + cout);
+        }
+        return evaluateur;
+    }
     public Evaluateur[] getEvaluateurs() {
-        return evaluateurs;
+        return java.util.Arrays.copyOf(this.evaluateurs, this.evaluateurs.length); // Eviter de retourner la liste pour la securite
+    }
+    public List<Expert> getExperts() {
+        return new java.util.ArrayList<>(this.experts); // Eviter de retourner la liste pour la securite
+    }
+    public List<Projet> getProjets() {
+        return new java.util.ArrayList<>(this.projets); // Eviter de retourner la liste pour la securite
     }
 
-
+    // Setters
     public void setElu(Elu elu) {
         Objects.requireNonNull(elu, "L'élu ne peut pas être null");
         this.elu = elu;
     }
 
+    // Methodes sur les attributs
     public void addEvaluateur(Evaluateur evaluateur) {
         Objects.requireNonNull(evaluateur, "L'évaluateur ne peut pas être null");
 
         int index = evaluateur.getSpecialisation().ordinal();
-
-        
         if (evaluateurs[index] != null) {
             throw new IllegalStateException("Un évaluateur pour la spécialisation " + evaluateur.getSpecialisation().getNom() + " existe déjà");
         }
 
         evaluateurs[index] = evaluateur;
     }
+
+    public void addExpert(Expert expert) {
+        Objects.requireNonNull(expert, "L'expert ne peut pas être null");
+
+        if (this.experts.contains(expert)) { // Refuser les doublons
+            throw new IllegalArgumentException("L'expert" + expert.getNom() + "existe déjà.");
+        }
+
+        this.experts.add(expert);
+    }
+
+    public void addProjet(Projet projet){
+        java.util.Objects.requireNonNull(projet, "Le projet ne peut pas être null");
+        this.projets.add(projet);
+    }
+
+    // Methodes - Actions a proprement parler
+    public void cycleSimulation(){
+        if (this.getExperts().isEmpty()) {
+            System.out.println("Aucun expert donc aucun projet présent");
+            return;
+        }
+        
+        // Parcours de toutes les propositions des experts
+        for (Expert expert : this.getExperts()) {
+            String titre = "Proposition de " +  expert.getPrenom() + expert.getNom() + " (" + expert.getCompetence().getNom() + ")";
+            String description = "Proposition générée pour le secteur " + expert.getCompetence().getNom();
+            Projet projetActuel = expert.propositionSecteur(
+                titre, description, expert.getCompetence());
+        
+            // Estimation du cout pour chaque specialisation (Economique, Social et Environnemental)
+            for (Evaluateur evaluateur : this.getEvaluateurs()) {
+                if (evaluateur != null) {
+                    evaluateur.evaluerCout(projetActuel);
+                }
+            }
+            // Evaluation du bénéfice pour le projet
+            this.getElu().evaluerBenefice(projetActuel);
+
+            // Ajout dans la liste de projets
+            this.addProjet(projetActuel);
+            System.out.println("Projet ajouté : " + projetActuel.getTitre());
+            System.out.println("\t ---> Description : " + projetActuel.getDescription());
+        }
+    }   
 
 }
