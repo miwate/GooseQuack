@@ -42,6 +42,7 @@ public class EquipeMunicipale {
 
     // Getters
     public Elu getElu() {
+        java.util.Objects.requireNonNull(elu, "L'élu ne peut pas être null");
         return new Elu(elu.getNom(), elu.getPrenom(), elu.getAge()); // Renvoie une copie pour proteger l'elu
     }
     public Evaluateur getEvaluateur(Cout cout) { // L'evaluateur associe a l'index du cout (l'evaluateur du type du cout)
@@ -91,11 +92,36 @@ public class EquipeMunicipale {
         this.experts.add(expert);
     }
 
-    // Methodes - Actions a proprement parler
-    public void cycleSimulation(EquipeMunicipale equipe){
-        for (Expert expert : equipe.experts) {
-            expert.propositionSecteur(expert.getTitreProp(), expert.getDescProp(), expert.getCompetence());
-        }
+    public void addProjet(Projet projet){
+        java.util.Objects.requireNonNull(projet, "Le projet ne peut pas être null");
+        this.projets.add(projet);
     }
+
+    // Methodes - Actions a proprement parler
+    public void cycleSimulation(){
+        if (this.getExperts().isEmpty()) {
+            System.out.println("Aucun expert donc aucun projet présent");
+            return;
+        }
+        
+        // Parcours de toutes les propositions des experts
+        for (Expert expert : this.getExperts()) {
+            Projet projetActuel = expert.propositionSecteur(
+                "Proposition de " + expert.getNom(), expert.getDescProp(), expert.getCompetence());
+        
+            // Estimation du cout pour chaque specialisation (Economique, Social et Environnemental)
+            for (Evaluateur evaluateur : this.getEvaluateurs()) {
+                if (evaluateur != null) {
+                    evaluateur.evaluerCout(projetActuel);
+                }
+            }
+            // Evaluation du bénéfice pour le projet
+            this.getElu().evaluerBenefice(projetActuel);
+
+            // Ajout dans la liste de projets
+            this.addProjet(projetActuel);
+            System.out.println("Projet ajouté : " + projetActuel.getTitre());
+        }
+    }   
 
 }
