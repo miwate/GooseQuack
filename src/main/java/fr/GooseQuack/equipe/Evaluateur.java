@@ -1,5 +1,7 @@
 package fr.GooseQuack.equipe;
 
+import java.util.Random;
+
 /**
  * Classe d'un évaluateur, sous-classe de Personne.
  * 
@@ -9,6 +11,10 @@ package fr.GooseQuack.equipe;
 public class Evaluateur extends Personne {
     
     private final Cout specialisation;
+    private final Random random;
+
+    private static final int MIN_COUT = 10;
+    private static final int MAX_COUT = 100; 
 
     /**
      * Construit un évaluateur avec sa spécialisation.
@@ -27,8 +33,10 @@ public class Evaluateur extends Personne {
             throw new NullPointerException("La spécialisation ne peut pas être null");
         }
         this.specialisation = specialisation;
+        this.random = new Random();
     }
 
+    // Getter
     public Cout getSpecialisation() {
         return specialisation;
     }
@@ -40,16 +48,14 @@ public class Evaluateur extends Personne {
      * @return le coût évalué du projet
      * @throws NullPointerException si le projet est null
      */
-    public int evaluerCout(Projet projet) {
+    public void evaluerCout(Projet projet) {
         if (projet == null) {
             throw new NullPointerException("Le projet ne peut pas être null");
         }
 
-        // AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        // je mets 1000 parce que je sais pas quoi mettre d'autre pour l'instant
-        int cout = 1000;
-
-        return cout;
+        // Stochastique (random)
+        int cout = random.nextInt(MAX_COUT - MIN_COUT + 1) + MIN_COUT;
+        projet.setCout(specialisation, cout);
 
     }
 
