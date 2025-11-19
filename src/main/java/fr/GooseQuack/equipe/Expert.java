@@ -13,7 +13,7 @@ public class Expert extends Personne {
 
     private EnumSet<Secteur> competences;
     private String titreProposition;
-    private String proposition;
+    private String descProposition;
 
     /**
      * Construit un expert.
@@ -35,6 +35,8 @@ public class Expert extends Personne {
         for (Secteur secteur : competences) {
             this.competences.add(secteur);
         }
+        this.titreProposition=null;
+        this.descProposition=null;
     }
 
     /**
@@ -44,6 +46,15 @@ public class Expert extends Personne {
      */
     public EnumSet<Secteur> getCompetences() {
         return EnumSet.copyOf(competences);
+    }
+    public Secteur getCompetence() {
+        return this.competences.iterator().next();
+    }
+    public String getTitreProp() {
+        return titreProposition;
+    }
+    public String getDescProp() {
+        return descProposition;
     }
 
     // Setter : competences
