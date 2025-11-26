@@ -6,8 +6,7 @@ import fr.GooseQuack.sacados.Objet;
 import fr.GooseQuack.sacados.SacADosCalculs;
 
 /**
- * Classe d'un sac à dos (problème du sac à dos multidimensionnel).
- * 
+ * Classe implémentant le critère formel de comparaison par somme (f_somme).
  * @author Drys (lidr05)
  * @version 1.0
  */
@@ -17,7 +16,7 @@ public class ComparatorfSomme implements Comparator<Objet> {
 
     @Override
     public int compare(Objet o1, Objet o2) {
-        // Calcul du maximum des couts
+        // Calcul de la somme des couts
         int sommeCouts1 = SacADosCalculs.sommeCouts(o1.getCouts());
         int sommeCouts2 = SacADosCalculs.sommeCouts(o2.getCouts());
 

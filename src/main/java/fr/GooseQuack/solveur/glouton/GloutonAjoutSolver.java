@@ -13,12 +13,13 @@ import fr.GooseQuack.sacados.SacADos;
  * @version 1.0
  */
 
+// Méthodes seulement
 public class GloutonAjoutSolver {
     
-    // Methode Gloutonne par Ajout par SOMME
-    public List<Objet> MethodeParAjoutSomme(SacADos sac, Comparator<Objet> comparator) {
-        List<Objet> objetsTriSomme = new ArrayList<>(sac.getObjets());
-        objetsTriSomme.sort(comparator);
+    // Methode Gloutonne par Ajout par Somme ou par Max
+    public List<Objet> MethodeParAjout(SacADos sac, Comparator<Objet> comparator) {
+        List<Objet> objetsTriTmp = new ArrayList<>(sac.getObjets());
+        objetsTriTmp.sort(comparator);
 
         List<Objet> S = new ArrayList<>();
 
@@ -26,7 +27,7 @@ public class GloutonAjoutSolver {
         int[] budgets = sac.getBudgets();
         int[] coutsTotal = new int[dimension];
 
-        for (Objet o : objetsTriSomme) {
+        for (Objet o : objetsTriTmp) {
             if (sommeCoutsInfBudget(o, coutsTotal, budgets)) {
                 S.add(o);
                 changementsCouts(o, coutsTotal);
@@ -36,7 +37,7 @@ public class GloutonAjoutSolver {
         return S;
     }
 
-    // Contrainte principale de budget
+    // Utilitaire : Contrainte principale de budget
     public boolean sommeCoutsInfBudget(Objet o, int[] coutsTotal, int[] budgets) {
         int coutsO[] = o.getCouts();
         int dim = budgets.length;
@@ -49,7 +50,7 @@ public class GloutonAjoutSolver {
         return true;
     }
 
-    // Mets à jour les coûts
+    // Utilitaire : Mets à jour les coûts
     private void changementsCouts(Objet o, int[] coutsTotal){
         int[] coutsO = o.getCouts();
         int dim = coutsTotal.length;
@@ -57,26 +58,5 @@ public class GloutonAjoutSolver {
         for (int l = 0; l < dim; l++) {
             coutsTotal[l] += coutsO[l];
         }
-    }
-
-
-    // Methode Gloutonne par Ajout par MAX
-    public List<Objet> MethodeParAjoutMax(SacADos sac, Comparator<Objet> comparator) {
-        List<Objet> objetsTriMax = new ArrayList<>(sac.getObjets());
-        // objetsTriMax.sort(comparator);
-
-        List<Objet> S = new ArrayList<>();
-
-        int dimension = sac.getDimension();
-        int[] budgets = sac.getBudgets();
-        int[] coutsTotal = new int[dimension];
-
-        for (Objet o : objetsTriMax) {
-            if (sommeCoutsInfBudget(o, coutsTotal, budgets)) {
-                S.add(o);
-                changementsCouts(o, coutsTotal);
-            }
-        }
-        return S;
     }
 }
