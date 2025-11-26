@@ -5,6 +5,14 @@ import java.util.Comparator;
 import fr.GooseQuack.sacados.Objet;
 import fr.GooseQuack.sacados.SacADosCalculs;
 
+/**
+ * Classe d'un sac à dos (problème du sac à dos multidimensionnel).
+ * 
+ * @author Drys (lidr05)
+ * @version 1.0
+ */
+
+
 public class ComparatorfMax implements Comparator<Objet> {
 
     @Override
@@ -26,5 +34,5 @@ public class ComparatorfMax implements Comparator<Objet> {
             return Integer.compare(o2.getUtilite(), o1.getUtilite());
         }
     }
-    
+
 }
