@@ -9,16 +9,14 @@ import fr.GooseQuack.sacados.SacADos;
 
 /**
  * Classe d'un sac à dos (problème du sac à dos multidimensionnel).
- * 
- * @author William (miwate)
  * @author Drys (lidr05)
  * @version 1.0
  */
 
 public class GloutonAjoutSolver {
     
-    // Methode Gloutonne par Ajout
-    public List<Objet> MethodeParAjout(SacADos sac, Comparator<Objet> comparator) {
+    // Methode Gloutonne par Ajout par SOMME
+    public List<Objet> MethodeParAjoutSomme(SacADos sac, Comparator<Objet> comparator) {
         List<Objet> objetsTriSomme = new ArrayList<>(sac.getObjets());
         objetsTriSomme.sort(comparator);
 
@@ -59,5 +57,26 @@ public class GloutonAjoutSolver {
         for (int l = 0; l < dim; l++) {
             coutsTotal[l] += coutsO[l];
         }
+    }
+
+
+    // Methode Gloutonne par Ajout par MAX
+    public List<Objet> MethodeParAjoutMax(SacADos sac, Comparator<Objet> comparator) {
+        List<Objet> objetsTriMax = new ArrayList<>(sac.getObjets());
+        // objetsTriMax.sort(comparator);
+
+        List<Objet> S = new ArrayList<>();
+
+        int dimension = sac.getDimension();
+        int[] budgets = sac.getBudgets();
+        int[] coutsTotal = new int[dimension];
+
+        for (Objet o : objetsTriMax) {
+            if (sommeCoutsInfBudget(o, coutsTotal, budgets)) {
+                S.add(o);
+                changementsCouts(o, coutsTotal);
+            }
+        }
+        return S;
     }
 }
