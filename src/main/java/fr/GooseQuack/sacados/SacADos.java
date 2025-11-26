@@ -1,5 +1,8 @@
 package fr.GooseQuack.sacados;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -20,7 +23,31 @@ public class SacADos {
      * Tableau d'entiers naturel : budget du sac à dos par dimension
      */    
     private final int[] budgets;
-
-    
     private final List<Objet> objets;
+
+    // Constructeurs
+    public SacADos(int dimension, int[] budgets, List<Objet> objets) {
+        this.dimension = dimension;
+        this.budgets = budgets.clone();
+
+        if (objets != null) {
+            this.objets = new ArrayList<>(objets);
+        }
+        else {
+            this.objets = new ArrayList<>();
+        }
+    } 
+
+    // Getters
+    public int getDimension() {
+        return dimension;
+    }
+    public int[] getBudgets() {
+        return Arrays.copyOf(budgets, budgets.length);
+    }
+    public List<Objet> getObjets() {
+        return Collections.unmodifiableList(objets); // Cree une COPIE IMMUABLE
+    }
+    
+    // Pas de setters car variables de classe final
 }

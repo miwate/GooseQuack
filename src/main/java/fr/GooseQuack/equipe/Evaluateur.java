@@ -6,6 +6,7 @@ import java.util.Random;
  * Classe d'un évaluateur, sous-classe de Personne.
  * 
  * @author William (miwate)
+ * @author Drys (lidr05)
  * @version 1.0
  */
 public class Evaluateur extends Personne {
@@ -36,7 +37,7 @@ public class Evaluateur extends Personne {
         this.random = new Random();
     }
 
-    // Getter
+    // Getter (pas de Setter car final)
     public Cout getSpecialisation() {
         return specialisation;
     }

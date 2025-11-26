@@ -98,6 +98,7 @@ public class EquipeMunicipale {
     }
 
     // Methodes - Actions a proprement parler
+    // Cette ligne a été écrite sur le trône.
     public void cycleSimulation(){
         if (this.getExperts().isEmpty()) {
             System.out.println("Aucun expert donc aucun projet présent");
