@@ -3,7 +3,7 @@ package fr.GooseQuack.sacados;
 import java.util.Arrays;
 
 /**
- * Classe d'un sac à dos (problème du sac à dos multidimensionnel).
+ * Classe utilitaire implémentant la somme et le maximum d'un tableau.
  * 
  * @author Drys (lidr05)
  * @version 1.0

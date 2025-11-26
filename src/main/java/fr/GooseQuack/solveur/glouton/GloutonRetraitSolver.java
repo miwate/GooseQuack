@@ -8,16 +8,17 @@ import fr.GooseQuack.sacados.Objet;
 import fr.GooseQuack.sacados.SacADos;
 
 /**
- * Classe d'un sac à dos (problème du sac à dos multidimensionnel).
+ * Classe de la méthode gloutonne par Retrait (en fonction d'un comparateur choisi). 
  * @author Drys (lidr05)
  * @version 1.0
  */
 
+/*
 // Méthodes seulement
-public class GloutonAjoutSolver {
+public class GloutonRetraitSolver {
     
-    // Methode Gloutonne par Ajout par Somme ou par Max
-    public List<Objet> MethodeParAjout(SacADos sac, Comparator<Objet> comparator) {
+    // Methode Gloutonne par Retrait
+    public List<Objet> MethodeParRetrait(SacADos sac, Comparator<Objet> comparator) {
         List<Objet> objetsTriTmp = new ArrayList<>(sac.getObjets());
         objetsTriTmp.sort(comparator);
 
@@ -60,3 +61,4 @@ public class GloutonAjoutSolver {
         }
     }
 }
+    */

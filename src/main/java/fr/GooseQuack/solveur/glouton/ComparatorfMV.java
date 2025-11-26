@@ -6,17 +6,19 @@ import fr.GooseQuack.sacados.Objet;
 import fr.GooseQuack.sacados.SacADosCalculs;
 
 /**
- * Classe implémentant le critère formel de comparaison par somme (f_somme).
+ * Classe implémentant le critère formel de comparaison par "l’ensemble des dimensions avec le plus gros dépassement de budget" (f_mv).
+ * 
  * @author Drys (lidr05)
  * @version 1.0
  */
 
 
-public class ComparatorfSomme implements Comparator<Objet> {
+public class ComparatorfMV implements Comparator<Objet> {
 
+        // A CHANGER
     @Override
     public int compare(Objet o1, Objet o2) {
-        // Calcul de la somme des couts
+        
         int sommeCouts1 = SacADosCalculs.sommeCouts(o1.getCouts());
         int sommeCouts2 = SacADosCalculs.sommeCouts(o2.getCouts());
 
@@ -35,3 +37,4 @@ public class ComparatorfSomme implements Comparator<Objet> {
     }
 
 }
+
