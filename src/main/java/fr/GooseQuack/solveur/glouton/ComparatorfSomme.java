@@ -13,21 +13,21 @@ import fr.GooseQuack.sacados.SacADosCalculs;
  */
 
 
-public class ComparatorfMax implements Comparator<Objet> {
+public class ComparatorfSomme implements Comparator<Objet> {
 
     @Override
     public int compare(Objet o1, Objet o2) {
         // Calcul du maximum des couts
-        int maxCout1 = SacADosCalculs.maxCouts(o1.getCouts());
-        int maxCout2 = SacADosCalculs.maxCouts(o2.getCouts());
+        int sommeCouts1 = SacADosCalculs.sommeCouts(o1.getCouts());
+        int sommeCouts2 = SacADosCalculs.sommeCouts(o2.getCouts());
 
-        double f_max1 = o1.getUtilite() / (double) maxCout1;
-        double f_max2 = o2.getUtilite() / (double) maxCout2;
+        double f_somme1 = o1.getUtilite() / (double) sommeCouts1;
+        double f_somme2 = o2.getUtilite() / (double) sommeCouts2;
 
-        if (f_max1 > f_max2) {
+        if (f_somme1 > f_somme2) {
             return -1; // Ordre décroissant
         }
-        else if (f_max1 < f_max2) {
+        else if (f_somme1 < f_somme2) {
             return 1;
         }
         else {
