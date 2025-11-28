@@ -1,9 +1,14 @@
 # GooseQuack
+
 ## Préalable : Gradle (sur Ubuntu)
 ```bash
 sudo apt install gradle
 ```
-## Comment build
+Versions :
+Java 21
+Gradle 8.5
+
+## Comment build/run
 Sur linux (liste non exhaustive de commandes)
 ```bash
 ./gradlew build
@@ -19,3 +24,8 @@ Sur linux (liste non exhaustive de commandes)
 ```
 
 Sur Windows idem mais ``gradlew.bat``
+
+## Générer la javadoc
+```bash
+./gen-javadoc.sh
+```
