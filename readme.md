@@ -1,4 +1,5 @@
 # GooseQuack
+https://github.com/miwate/GooseQuack
 
 ## Préalable : Gradle (sur Ubuntu)
 ```bash
@@ -31,4 +32,4 @@ Sur Windows idem mais ``gradlew.bat``
 ```
 
 ## Benchmark Instances
-From : [Link](https://www.researchgate.net/publication/271198281_Benchmark_instances_for_the_Multidimensional_Knapsack_Problem)
+Folder sac94 is from https://www.researchgate.net/publication/271198281_Benchmark_instances_for_the_Multidimensional_Knapsack_Problem
