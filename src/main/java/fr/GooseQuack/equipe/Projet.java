@@ -8,6 +8,7 @@ import java.util.Objects;
  * 
  * @author William (miwate)
  * @author Drys (lidr05)
+ * @author Christiab (christianlikq-del)
  * @version 1.0
  */
 public class Projet {
