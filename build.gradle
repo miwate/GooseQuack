@@ -29,3 +29,11 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
+javadoc {
+    options {
+        footer = '<a href="https://github.com/miwate/GooseQuack">Repo GitHub</a>'
+        windowTitle = 'GooseQuack Documentation'
+        encoding = 'UTF-8'
+        charSet = 'UTF-8'
+    }
+}

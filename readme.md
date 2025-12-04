@@ -27,5 +27,5 @@ Sur Windows idem mais ``gradlew.bat``
 
 ## Générer la javadoc
 ```bash
-./gen-javadoc.sh
+./gradlew javadoc
 ```
