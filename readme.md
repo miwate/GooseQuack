@@ -29,3 +29,6 @@ Sur Windows idem mais ``gradlew.bat``
 ```bash
 ./gradlew javadoc
 ```
+
+## Benchmark Instances
+From : [Link](https://www.researchgate.net/publication/271198281_Benchmark_instances_for_the_Multidimensional_Knapsack_Problem)
