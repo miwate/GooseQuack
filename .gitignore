@@ -16,6 +16,7 @@ out/
 Thumbs.db
 
 # Java
+bin/
 *.class
 *.jar
 !gradle/wrapper/gradle-wrapper.jar
