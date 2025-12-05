@@ -10,7 +10,7 @@ Java 21
 Gradle 8.5
 
 ## Comment build/run
-Sur linux (liste non exhaustive de commandes)
+Sur linux
 ```bash
 ./gradlew build
 ```
@@ -20,11 +20,27 @@ Sur linux (liste non exhaustive de commandes)
 ```bash
 ./gradlew clean
 ```
-```bash
-./gradlew test
-```
 
 Sur Windows idem mais ``gradlew.bat``
+
+## Comment test
+Tous les tests
+```bash
+./gradlew test --warning-mode all
+```
+
+Un fichier test
+```bash
+./gradlew test --tests NomDuTest --warning-mode all
+```
+```bash
+./gradlew test --tests VersSacADosTest --warning-mode all
+```
+
+Résultats des tests
+```bash
+./gradlew test --warning-mode all --info
+```
 
 ## Générer la javadoc
 ```bash
