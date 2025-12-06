@@ -20,6 +20,10 @@ Sur linux
 ```bash
 ./gradlew clean
 ```
+Clean + build + fix (en cas de problèmes de dépendances)
+```bash
+./gradlew clean build --refresh-dependencies
+```
 
 Sur Windows idem mais ``gradlew.bat``
 
