@@ -72,12 +72,14 @@ class VersSacADosTest {
         projetsTest.add(pAttractivite);
     }
 
+    // ------------- versTypeCout -------------
+
     /**
-     * Test de versTypeCout
+     * Test de versTypeCout check de la création
      */
     @Test
     @DisplayName("versTypeCout : conversion des 5 types de projets")
-    void testVersTypeCout() {
+    void testVersTypeCoutCheck() {
         SacADos sac = VersSacADos.versTypeCout(projetsTest, 10000, 6000, 4000);
 
         assertNotNull(sac);
@@ -106,4 +108,177 @@ class VersSacADosTest {
         assertEquals(7500, obj5.getUtilite());
         assertArrayEquals(new int[]{2200, 1000, 1400}, obj5.getCouts());
     }
+
+    /**
+     * Test de versTypeCout pour liste null
+     */
+    @Test
+    @DisplayName("versTypeCout : liste null pour les projets")
+    void testVersTypeCoutNull() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            VersSacADos.versTypeCout(null, 67, 67, 67);
+        });
+
+        assertEquals("La liste des projets doit être non null et non vide", exception.getMessage());
+    }
+
+    /**
+     * Test de versTypeCout pour liste vide
+     */
+    @Test
+    @DisplayName("versTypeCout : liste de projets vide")
+    void testVersTypeCoutVide() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            VersSacADos.versTypeCout(new ArrayList<>(), 67, 67, 67);
+        });
+
+        assertEquals("La liste des projets doit être non null et non vide", exception.getMessage());
+    }
+
+    /**
+     * Test de versTypeCout pour budget économisue négatif
+     */
+    @Test
+    @DisplayName("versTypeCout : budget économique négatif")
+    void testVersTypeCoutBudgetEcoNeg() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            VersSacADos.versTypeCout(projetsTest, -1, 67, 67);
+        });
+
+        assertEquals("Les budgets doivent être positifs", exception.getMessage());
+    }
+
+    /**
+     * Test de versTypeCout pour budget social négatif
+     */
+    @Test
+    @DisplayName("versTypeCout : budget social négatif")
+    void testVersTypeCoutBudgetSocNeg() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            VersSacADos.versTypeCout(projetsTest, 67, -1, 67);
+        });
+
+        assertEquals("Les budgets doivent être positifs", exception.getMessage());
+    }
+
+    /**
+     * Test de versTypeCout pour budget environnemmental négatif
+     */
+    @Test
+    @DisplayName("versTypeCout : budget environnemental négatif")
+    void testVersTypeCoutBudgetEnvNeg() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            VersSacADos.versTypeCout(projetsTest, 67, 67, -1);
+        });
+
+        assertEquals("Les budgets doivent être positifs", exception.getMessage());
+    }
+
+    /**
+     * Test de versTypeCout pour liste des projets ni nulle ni vide mais il y a un projet null
+     */
+    @Test
+    @DisplayName("versTypeCout : au moins un projet null dans la liste")
+    void testVersTypeCoutProjetNull() {
+        projetsTest.add(null);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            VersSacADos.versTypeCout(projetsTest, 67, 67, 67);
+        });
+
+        assertEquals("Chaque projet de la liste doit être non null", exception.getMessage());
+    }
+
+    /**
+     * Test de versTypeCout pour budget économique à zéro
+     */
+    @Test
+    @DisplayName("versTypeCout : budget économique à zéro")
+    void testVersTypeCoutBudgetEcoZero() {
+        SacADos sac = VersSacADos.versTypeCout(projetsTest, 0, 67, 670);
+
+        assertNotNull(sac);
+        assertEquals(3, sac.getDimension());
+        assertArrayEquals(new int[]{0, 67, 670}, sac.getBudgets());
+    }
+
+    /**
+     * Test de versTypeCout pour budget social à zéro
+     */
+    @Test
+    @DisplayName("versTypeCout : budget social à zéro")
+    void testVersTypeCoutBudgetSocZero() {
+        SacADos sac = VersSacADos.versTypeCout(projetsTest, 6767, 0, 6767);
+
+        assertNotNull(sac);
+        assertEquals(3, sac.getDimension());
+        assertArrayEquals(new int[]{6767, 0, 6767}, sac.getBudgets());
+    }
+
+    /**
+     * Test de versTypeCout pour budget environnemental à zéro
+     */
+    @Test
+    @DisplayName("versTypeCout : budget environnemental à zéro")
+    void testVersTypeCoutBudgetEnvZero() {
+        SacADos sac = VersSacADos.versTypeCout(projetsTest, 1337, 1337, 0);
+
+        assertNotNull(sac);
+        assertEquals(3, sac.getDimension());
+        assertArrayEquals(new int[]{1337, 1337, 0}, sac.getBudgets());
+    }
+
+    /**
+     * Test de versTypeCout avec un seul projet
+     */
+    @Test
+    @DisplayName("versTypeCout : un seul projet dans la liste")
+    void testVersTypeCoutProjetSolo() {
+        List<Projet> solo = new ArrayList<>();
+        Projet p = new Projet("Single", "solo", Secteur.ATTRACTIVITE_ECONOMIQUE);
+
+        p.setBenefice(65156);
+        p.setCout(Cout.ECONOMIQUE, 546);
+        p.setCout(Cout.SOCIAL, 546);
+        p.setCout(Cout.ENVIRONNEMENTAL, 546);
+        solo.add(p);
+
+        SacADos sac = VersSacADos.versTypeCout(solo, 10000, 10000, 10000);
+
+        assertNotNull(sac);
+        assertEquals(3, sac.getDimension());
+        assertEquals(1, sac.getObjets().size());
+
+        Objet obj = sac.getObjets().get(0);
+        assertEquals(65156, obj.getUtilite());
+        assertArrayEquals(new int[]{546, 546, 546}, obj.getCouts());
+    }
+
+    /**
+     * Test de versTypeCout avec coûts à zéro
+     */
+    @Test
+    @DisplayName("versTypeCout : projet avec coûts à zéro")
+    void testVersTypeCoutFree() {
+        List<Projet> pFree = new ArrayList<>();
+        Projet p = new Projet("Projet free", "free", Secteur.ATTRACTIVITE_ECONOMIQUE);
+
+        p.setBenefice(1000001);
+        p.setCout(Cout.ECONOMIQUE, 0);
+        p.setCout(Cout.SOCIAL, 0);
+        p.setCout(Cout.ENVIRONNEMENTAL, 0);
+        pFree.add(p);
+
+        SacADos sac = VersSacADos.versTypeCout(pFree, 10000, 10000, 10000);
+
+        assertNotNull(sac);
+        assertEquals(1, sac.getObjets().size());
+
+        Objet obj = sac.getObjets().get(0);
+        assertEquals(1000001, obj.getUtilite());
+        assertArrayEquals(new int[]{0, 0, 0}, obj.getCouts());
+    }
+
+
+
 }
