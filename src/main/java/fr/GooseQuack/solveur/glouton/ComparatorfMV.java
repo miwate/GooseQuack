@@ -18,7 +18,7 @@ import fr.GooseQuack.sacados.SacADosCalculs;
 
 
 /**
- * Comprateur pour la méthode à retrait sur f_mv
+ * Comparateur pour la méthode à retrait sur f_mv
  */
 public class ComparatorfMV implements Comparator<Objet> {
 
@@ -29,9 +29,9 @@ public class ComparatorfMV implements Comparator<Objet> {
     /**
      * Construit un comparator f_mv
      * 
-     * @param sac
-     * @param solutionCourante
-     * @throws IllegalArgumentException
+     * @param sac le sac à dos
+     * @param solutionCourante la solution courante pour calculer les dépassements
+     * @throws IllegalArgumentException si le sac ou la solution courante est null
      */
     public ComparatorfMV(SacADos sac, List<Objet> solutionCourante) {
         if (sac == null) {
@@ -49,11 +49,11 @@ public class ComparatorfMV implements Comparator<Objet> {
 
     /**
      * Compare deux objets selon f_mv
-     * 
-     * @param o1
-     * @param o2
-     * @return
-     * @throws IllegalArgumentException
+     *
+     * @param o1 le premier objet
+     * @param o2 le deuxième objet
+     * @return négatif si o1 est mieux, positif si o2 est mieux, 0 si égaux
+     * @throws IllegalArgumentException si o1 est null ou o2 est null
      */
     @Override
     public int compare(Objet o1, Objet o2) {

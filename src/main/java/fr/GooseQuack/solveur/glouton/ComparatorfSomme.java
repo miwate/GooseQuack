@@ -17,8 +17,21 @@ import fr.GooseQuack.sacados.SacADosCalculs;
 
 public class ComparatorfSomme implements Comparator<Objet> {
 
+    /**
+     * Compare deux objets selon f_somme
+     *
+     * @param o1 le premier objet
+     * @param o2 le deuxième objet
+     * @return négatif si o1 est mieux, positif si o2 est mieux, 0 si égaux
+     * @throws IllegalArgumentException si o1 ou o2 est null
+     */
     @Override
     public int compare(Objet o1, Objet o2) {
+
+        if (o1 == null || o2 == null) {
+            throw new IllegalArgumentException("Les objets ne doivent pas être null");
+        }
+
         // Calcul de la somme des couts
         int sommeCouts1 = SacADosCalculs.sommeCouts(o1.getCouts());
         int sommeCouts2 = SacADosCalculs.sommeCouts(o2.getCouts());

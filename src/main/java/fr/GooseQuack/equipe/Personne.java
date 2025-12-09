@@ -11,7 +11,7 @@ import java.util.Objects;
  */
 
 public abstract class Personne {
-    
+
     private final String nom;
     private final String prenom;
 
@@ -19,13 +19,13 @@ public abstract class Personne {
 
 
     /**
-     * Construit une Personne
-     * 
+     * Construit une personne
+     *
      * @param nom le nom de famille (ne doit pas être null)
      * @param prenom le prénom (ne doit pas être null)
-     * @param age l'âge (doit être supérieur à 18)
+     * @param age l'âge (doit être supérieur ou égal à 18)
      * @throws NullPointerException si le nom ou le prénom est null
-     * @throws IllegalArgumentException si l'âge n'est pas supérieur à 18
+     * @throws IllegalArgumentException si l'âge est inférieur à 18
      */
     protected Personne(String nom, String prenom, int age) {
         Objects.requireNonNull(nom, "Le nom ne peut pas être null");
@@ -40,24 +40,39 @@ public abstract class Personne {
         this.age = age;
     }
 
-    // Getters
+    /**
+     * Donne le nom de famille
+     *
+     * @return le nom
+     */
     public String getNom() {
         return nom;
     }
+
+    /**
+     * Donne le prénom
+     *
+     * @return le prénom
+     */
     public String getPrenom() {
         return prenom;
     }
+
+    /**
+     * Donne l'âge
+     *
+     * @return l'âge
+     */
     public int getAge() {
         return age;
     }
 
     /**
-     * Met à jour l'âge d'une personne (supérieur à 18 ans)
-     * 
-     * @param age l'âge (doit être supérieur à 18)
-     * @throws IllegalArgumentException si l'âge n'est pas supérieur à 18
+     * Met à jour l'âge de la personne
+     *
+     * @param age l'âge (doit être supérieur ou égal à 18)
+     * @throws IllegalArgumentException si l'âge est inférieur à 18
      */
-    // Setters (pas Nom ou Prenom car final)
     public void setAge(int age) {
         if (age < 18) {
             throw new IllegalArgumentException("L'âge doit être >= 18");
@@ -65,7 +80,12 @@ public abstract class Personne {
         this.age = age;
     }
 
-    // Methodes utilitaires (comparaison entre objets)
+    /**
+     * Vérifie l'égalité entre deux personnes
+     *
+     * @param o l'objet à comparer
+     * @return true si les personnes ont le même nom, prénom et âge, false sinon
+     */
     @Override
     public boolean equals(Object o){
         if (this == o) {
@@ -78,6 +98,11 @@ public abstract class Personne {
         return age == personne.age && java.util.Objects.equals(nom, personne.nom) && java.util.Objects.equals(prenom, personne.prenom);
     }
 
+    /**
+     * Donne le hash d'une personne
+     *
+     * @return le code de hash à l'aide du nom, du prénom et de l'âge
+     */
     @Override
     public int hashCode() {
         return java.util.Objects.hash(nom, prenom, age);
