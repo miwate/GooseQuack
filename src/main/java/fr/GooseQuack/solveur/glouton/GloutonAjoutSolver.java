@@ -8,7 +8,8 @@ import fr.GooseQuack.sacados.Objet;
 import fr.GooseQuack.sacados.SacADos;
 
 /**
- * Classe d'un sac à dos (problème du sac à dos multidimensionnel).
+ * Solveur utilisant la méthode gloutonne par ajout
+ * 
  * @author Drys (lidr05)
  * @version 1.0
  */
@@ -16,7 +17,13 @@ import fr.GooseQuack.sacados.SacADos;
 // Méthodes seulement
 public class GloutonAjoutSolver {
     
-    // Methode Gloutonne par Ajout par Somme ou par Max
+    /**
+     * Résout le problème du sac à dos multidimensionnel par la méthode gloutonne par ajout
+     *
+     * @param sac le sac à dos
+     * @param comparator le comparateur utilisé
+     * @return une liste d'objets pour la solution gloutonne
+     */
     public List<Objet> MethodeParAjout(SacADos sac, Comparator<Objet> comparator) {
         List<Objet> objetsTriTmp = new ArrayList<>(sac.getObjets());
         objetsTriTmp.sort(comparator);
@@ -37,7 +44,14 @@ public class GloutonAjoutSolver {
         return S;
     }
 
-    // Utilitaire : Contrainte principale de budget
+    /**
+     * Vérifie si l'ajout d'un objet respecte les contraintes de budget
+     *
+     * @param o l'objet candidat
+     * @param coutsTotal les coûts totaux actuels
+     * @param budgets les budgets maximums
+     * @return true si l'ajout de l'objet ne dépasse aucun budget, sinon false
+     */
     public boolean sommeCoutsInfBudget(Objet o, int[] coutsTotal, int[] budgets) {
         int coutsO[] = o.getCouts();
         int dim = budgets.length;
@@ -50,7 +64,12 @@ public class GloutonAjoutSolver {
         return true;
     }
 
-    // Utilitaire : Mets à jour les coûts
+    /**
+     * Met à jour les coûts totaux en ajoutant les coûts d'un objet
+     *
+     * @param o l'objet
+     * @param coutsTotal les coûts totaux à mettre à jour
+     */
     private void changementsCouts(Objet o, int[] coutsTotal){
         int[] coutsO = o.getCouts();
         int dim = coutsTotal.length;

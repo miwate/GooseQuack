@@ -22,11 +22,16 @@ import fr.GooseQuack.sacados.SacADos;
 public class VersSacADos {
     
     /**
-     * @param projets
-     * @param budgetEconomique
-     * @param budgetSocial
-     * @param budgetEnvironnemental
-     * @return
+     * Convertit une liste de projets en sac à dos multidimensionnel (type cout)
+     *
+     * @param projets la liste des projets à convertir (ne doit pas être null ou vide)
+     * @param budgetEconomique le budget pour le coût économique (doit être positif)
+     * @param budgetSocial le budget pour le coût social (doit être positif)
+     * @param budgetEnvironnemental le budget pour le coût environnemental (doit être positif)
+     * @return un sac à dos avec 3 dimensions (économique, social, environnemental)
+     * @throws IllegalArgumentException si la liste des projets est null ou vide
+     * @throws IllegalArgumentException si au moins un budget est négatif
+     * @throws IllegalArgumentException si un projet de la liste est null
      */
     public static SacADos versTypeCout(List<Projet> projets, int budgetEconomique, int budgetSocial, int budgetEnvironnemental) {
         
@@ -60,13 +65,18 @@ public class VersSacADos {
 
 
     /**
-     * @param projets
-     * @param budgetSport
-     * @param budgetSante
-     * @param budgetCulture
-     * @param budgetEducation
-     * @param budgetAttractivite
-     * @return
+     * Convertit une liste de projets en sac à dos multidimensionnel (secteur)
+     *
+     * @param projets la liste des projets à convertir (ne doit pas être null ou vide)
+     * @param budgetSport le budget pour le secteur Sport (doit être positif)
+     * @param budgetSante le budget pour le secteur Santé (doit être positif)
+     * @param budgetCulture le budget pour le secteur Culture (doit être positif)
+     * @param budgetEducation le budget pour le secteur Éducation (doit être positif)
+     * @param budgetAttractivite le budget pour le secteur Attractivité Économique (doit être positif)
+     * @return un sac à dos avec 5 dimensions (une par secteur)
+     * @throws IllegalArgumentException si la liste des projets est null ou vide
+     * @throws IllegalArgumentException si au moins un budget est négatif
+     * @throws IllegalArgumentException si un projet de la liste est null
      */
     public static SacADos versSecteur(List<Projet> projets, int budgetSport, int budgetSante, int budgetCulture, int budgetEducation, int budgetAttractivite) {
 
@@ -101,8 +111,11 @@ public class VersSacADos {
     }
 
     /**
-     * @param secteur
-     * @return
+     * Donne l'indice correspondant à un secteur d'activité
+     *
+     * @param secteur le secteur (ne doit pas être null)
+     * @return l'indice du secteur 0 Sport, 1 Santé, 2 Culture, 3 Éducation, 4 Attractivité Économique
+     * @throws IllegalArgumentException si le secteur est null ou inconnu
      */
     private static int getIndiceSecteur(Secteur secteur) {
         if (secteur == null) {
@@ -127,9 +140,14 @@ public class VersSacADos {
     }
 
     /**
-     * @param pathFichier
-     * @return
-     * @throws IOException
+     * Donne un sac à dos multidimensionnel depuis un fichier texte
+     *
+     * @param pathFichier le chemin du fichier à charger (ne doit pas être null ou vide)
+     * @return un sac à dos construit à partir des données du fichier
+     * @throws IllegalArgumentException si le path est null ou vide
+     * @throws IllegalArgumentException si le format du fichier est invalide
+     * @throws IllegalArgumentException si les valeurs n, k ou v sont invalides
+     * @throws IOException si une erreur de lecture du fichier survient
      */
     public static SacADos loadFichier(String pathFichier) throws IOException {
         if (pathFichier == null || pathFichier.trim().isEmpty()) {

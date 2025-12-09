@@ -16,23 +16,13 @@ public class EquipeMunicipale {
 
     private Elu elu;
 
-    /**
-     * Tableau des 3 évaluateurs (taille fixe)
-     */
+
     private final Evaluateur[] evaluateurs;
-
-    /** 
-     * ArrayList des experts (taille dynamique avec List<Objet>)
-     */
     private final List<Expert> experts;
-
-    /** 
-     * ArrayList des projets (taille dynamique)
-     */
     private final List<Projet> projets;
 
     /**
-     * 
+     * Construit une équipe municipale vide avec des tableaux pour les évaluateurs, experts et projets
      */
     public EquipeMunicipale() {
         this.evaluateurs = new Evaluateur[Cout.nbTypes()]; // 1 evaluateur par type 
@@ -40,12 +30,26 @@ public class EquipeMunicipale {
         this.projets = new ArrayList<Projet>(); // Nombre indetermine d'experts
     }
 
-    // Getters
+    /**
+     * Donne l'élu de l'équipe
+     *
+     * @return une copie de l'élu
+     * @throws NullPointerException si pas d'élu
+     */
     public Elu getElu() {
         java.util.Objects.requireNonNull(elu, "L'élu ne peut pas être null");
         return new Elu(elu.getNom(), elu.getPrenom(), elu.getAge()); // Renvoie une copie pour proteger l'elu
     }
-    public Evaluateur getEvaluateur(Cout cout) { // L'evaluateur associe a l'index du cout (l'evaluateur du type du cout)
+
+    /**
+     * Donne l'évaluateur pour un type de coût donné
+     *
+     * @param cout le type de coût recherché (ne doit pas être null)
+     * @return l'évaluateur associé à ce type de coût
+     * @throws NullPointerException si le coût est null
+     * @throws IllegalStateException si aucun évaluateur n'est trouvé pour cette spécialisation
+     */
+    public Evaluateur getEvaluateur(Cout cout) {
         Objects.requireNonNull(cout, "Le cout ne peut pas être null");
         Evaluateur evaluateur = evaluateurs[cout.ordinal()];
 
@@ -54,23 +58,52 @@ public class EquipeMunicipale {
         }
         return evaluateur;
     }
+
+    /**
+     * Donne tous les évaluateurs de l'équipe
+     *
+     * @return une copie du tableau des évaluateurs
+     */
     public Evaluateur[] getEvaluateurs() {
         return java.util.Arrays.copyOf(this.evaluateurs, this.evaluateurs.length); // Eviter de retourner la liste pour la securite
     }
+
+    /**
+     * Donne la liste des experts de l'équipe
+     *
+     * @return une copie de la liste des experts
+     */
     public List<Expert> getExperts() {
         return new java.util.ArrayList<>(this.experts); // Eviter de retourner la liste pour la securite
     }
+
+    /**
+     * Donne la liste des projets de l'équipe
+     *
+     * @return une copie de la liste des projets
+     */
     public List<Projet> getProjets() {
         return new java.util.ArrayList<>(this.projets); // Eviter de retourner la liste pour la securite
     }
 
-    // Setters
+    /**
+     * Met à jour l'élu de l'équipe
+     *
+     * @param elu le nouvel élu (ne doit pas être null)
+     * @throws NullPointerException si l'élu est null
+     */
     public void setElu(Elu elu) {
         Objects.requireNonNull(elu, "L'élu ne peut pas être null");
         this.elu = elu;
     }
 
-    // Methodes sur les attributs
+    /**
+     * Ajoute un évaluateur à l'équipe
+     *
+     * @param evaluateur l'évaluateur à ajouter (ne doit pas être null)
+     * @throws NullPointerException si l'évaluateur est null
+     * @throws IllegalStateException si un évaluateur pour sa spécialisation existe déjà
+     */
     public void addEvaluateur(Evaluateur evaluateur) {
         Objects.requireNonNull(evaluateur, "L'évaluateur ne peut pas être null");
 
@@ -82,6 +115,13 @@ public class EquipeMunicipale {
         evaluateurs[index] = evaluateur;
     }
 
+    /**
+     * Ajoute un expert à l'équipe
+     *
+     * @param expert l'expert à ajouter (ne doit pas être null)
+     * @throws NullPointerException si l'expert est null
+     * @throws IllegalArgumentException si l'expert existe déjà dans l'équipe
+     */
     public void addExpert(Expert expert) {
         Objects.requireNonNull(expert, "L'expert ne peut pas être null");
 
@@ -92,6 +132,12 @@ public class EquipeMunicipale {
         this.experts.add(expert);
     }
 
+    /**
+     * Ajoute un projet à l'équipe
+     *
+     * @param projet le projet à ajouter (ne doit pas être null)
+     * @throws NullPointerException si le projet est null
+     */
     public void addProjet(Projet projet){
         java.util.Objects.requireNonNull(projet, "Le projet ne peut pas être null");
         this.projets.add(projet);
@@ -99,6 +145,10 @@ public class EquipeMunicipale {
 
     // Methodes - Actions a proprement parler
     // Cette ligne a été écrite sur le trône.
+    /**
+     * Exécute un cycle de simulation complet où chaque expert propose un projet,
+     * les évaluateurs estiment les coûts et l'élu évalue le bénéfice
+     */
     public void cycleSimulation(){
         if (this.getExperts().isEmpty()) {
             System.out.println("Aucun expert donc aucun projet présent");

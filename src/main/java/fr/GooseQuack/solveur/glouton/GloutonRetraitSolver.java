@@ -21,12 +21,13 @@ import fr.GooseQuack.sacados.SacADos;
 public class GloutonRetraitSolver {
     
     /**
-     * 
-     * @param sac Le sac à dos
-     * @param comparatorAjout Comparateur de la phase d'ajout
-     * @param comparatorRetrait Comparateur pour la phase de retrait
-     * @return Une solution du problème
-     * @throws IllegalArgumentException Si un argument donné est null
+     * Résout le problème du sac à dos multidimensionnel par la méthode gloutonne par retrait
+     *
+     * @param sac le sac à dos
+     * @param comparatorAjout comparateur de la phase d'ajout
+     * @param comparatorRetrait comparateur pour la phase de retrait
+     * @return une solution au problème
+     * @throws IllegalArgumentException si un argument est null
      */
     public List<Objet> methodeParRetrait(SacADos sac, Comparator<Objet> comparatorAjout, Comparator<Objet> comparatorRetrait) {
 
@@ -96,10 +97,11 @@ public class GloutonRetraitSolver {
     }
 
     /**
-     * 
-     * @param coutsTotaux
-     * @param budgets
-     * @return true si au moins un budget est dépassé
+     * Vérifie si au moins un budget est dépassé
+     *
+     * @param coutsTotaux les coûts totaux actuels
+     * @param budgets les budgets maximums
+     * @return true si au moins un budget est dépassé, false sinon
      */
     private boolean depasseBudget(long[] coutsTotaux, int[] budgets) {
         for (int l = 0; l < budgets.length; l++) {
