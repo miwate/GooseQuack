@@ -60,7 +60,7 @@ public class Projet {
      * Retourne le coût pour un type.
      * @param type le type du coût (économique, social ou environnemental)
      * @return le coût pour ce type
-     * @throws NullPointeurException si le type est null
+     * @throws NullPointerException si le type est null
      */
     public int getCout(Cout type) {
         Objects.requireNonNull(type, "Le type ne peut pas être null");
