@@ -9,23 +9,15 @@ import java.util.Arrays;
  * @version 1.0
  */
 public class Objet {
-    
-    /**
-     * Entier naturel : utilité de l'objet.
-     */
-    private final int utilite;
 
-    /**
-     * Tableau d'entiers naturels : coûts de l'objet par dimension.
-     * couts[i] : coût de l'objet dimension i
-     */
+    private final int utilite;
     private final int[] couts;
 
     /**
-     * Constructeur d'un objet.
+     * Construit un objet
      *
      * @param utilite l'utilité de l'objet (doit être positif)
-     * @param couts le tableau des coûts de l'objet par dimension (tous les coûts doivent être positifs)
+     * @param couts le tableau des coûts par dimension (tous les coûts doivent être positifs)
      * @throws IllegalArgumentException si l'utilité est négative
      * @throws IllegalArgumentException si le tableau des coûts est null ou vide
      * @throws IllegalArgumentException si au moins un coût est négatif
@@ -47,24 +39,33 @@ public class Objet {
         }
 
         this.utilite = utilite;
-        // J'utilise un final, il faut éviter d'exposer les tableaux
         this.couts = Arrays.copyOf(couts, couts.length);
     }
 
+    /**
+     * Donne l'utilité de l'objet
+     *
+     * @return l'utilité
+     */
     public int getUtilite() {
         return utilite;
     }
 
+    /**
+     * Donne les coûts de l'objet par dimension
+     *
+     * @return une copie du tableau des coûts
+     */
     public int[] getCouts() {
         return Arrays.copyOf(couts, couts.length);
     }
 
     /**
-     * Retourne le coût de l'objet pour une dimension donnée.
+     * Donne le coût de l'objet pour une dimension donnée
      *
      * @param dimension l'indice de la dimension (doit être entre 0 et le nombre de dimensions - 1)
-     * @return le coût de l'objet pour cette dimension
-     * @throws IndexOutOfBoundsException si la dimension est invalide (trop petite, trop grande)
+     * @return le coût pour cette dimension
+     * @throws IndexOutOfBoundsException si la dimension est invalide
      */
     public int getCout(int dimension) {
         if (dimension < 0 || dimension >= couts.length) {
@@ -73,6 +74,11 @@ public class Objet {
         return couts[dimension];
     }
 
+    /**
+     * Donne le nombre de dimensions
+     *
+     * @return le nombre de dimensions
+     */
     public int getNbDimensions() {
         return couts.length;
     }

@@ -13,19 +13,20 @@ import java.util.List;
  * @version 1.0
  */
 public class SacADos {
-    
-    /**
-     * Entier naturel : nombre de dimensions du problème.
-     */
+
     private final int dimension;
 
-    /**
-     * Tableau d'entiers naturel : budget du sac à dos par dimension
-     */    
     private final int[] budgets;
+
     private final List<Objet> objets;
 
-    // Constructeurs
+    /**
+     * Construit un sac à dos multidimensionnel
+     *
+     * @param dimension le nombre de dimensions
+     * @param budgets les budgets par dimension
+     * @param objets la liste des objets
+     */
     public SacADos(int dimension, int[] budgets, List<Objet> objets) {
         this.dimension = dimension;
         this.budgets = budgets.clone();
@@ -36,17 +37,33 @@ public class SacADos {
         else {
             this.objets = new ArrayList<>();
         }
-    } 
+    }
 
-    // Getters
+    /**
+     * Donne le nombre de dimensions
+     *
+     * @return le nombre de dimensions
+     */
     public int getDimension() {
         return dimension;
     }
+
+    /**
+     * Donne les budgets par dimension
+     *
+     * @return une copie du tableau des budgets (une copie pour protection)
+     */
     public int[] getBudgets() {
         return Arrays.copyOf(budgets, budgets.length);
     }
+
+    /**
+     * Donne la liste des objets disponibles
+     *
+     * @return une liste immuable des objets
+     */
     public List<Objet> getObjets() {
-        return Collections.unmodifiableList(objets); // Cree une COPIE IMMUABLE
+        return Collections.unmodifiableList(objets);
     }
     
     // Pas de setters car variables de classe final
