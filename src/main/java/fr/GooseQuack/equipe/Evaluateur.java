@@ -46,7 +46,6 @@ public class Evaluateur extends Personne {
      * Évalue le coût d'un projet en fonction de la spécialisation.
      * 
      * @param projet le projet à évaluer (ne doit pas être null)
-     * @return le coût évalué du projet
      * @throws NullPointerException si le projet est null
      */
     public void evaluerCout(Projet projet) {
