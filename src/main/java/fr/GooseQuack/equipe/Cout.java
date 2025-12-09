@@ -14,27 +14,37 @@ public enum Cout {
     private final String nom;
 
     /**
-     * Construit un coût avec son nom.
-     * 
-     * @param nom le nom du coût (Économique, Social, Environnemental).
+     * Construit un type de coût
+     *
+     * @param nom le nom du type de coût
      */
     Cout(String nom) {
         this.nom = nom;
     }
 
+    /**
+     * Donne le nom du type de coût
+     *
+     * @return le nom du type de coût
+     */
     public String getNom() {
         return nom;
     }
 
+    /**
+     * Donne le nom en texte du type de coût
+     *
+     * @return le nom du type de coût
+     */
     @Override
     public String toString() {
         return nom;
     }
 
     /**
-     * Retourne le nombre de types de coûts.
-     * 
-     * @return le nombre de types de coûts dans l'énumération (normalement 3).
+     * Donne le nombre de types de coûts
+     *
+     * @return le nombre de types de coûts dans l'énumération
      */
     public static int nbTypes() {
         return values().length;

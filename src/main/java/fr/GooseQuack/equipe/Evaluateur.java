@@ -15,17 +15,17 @@ public class Evaluateur extends Personne {
     private final Random random;
 
     private static final int MIN_COUT = 10;
-    private static final int MAX_COUT = 100; 
+    private static final int MAX_COUT = 100;
 
     /**
-     * Construit un évaluateur avec sa spécialisation.
-     * 
+     * Construit un évaluateur avec sa spécialisation
+     *
      * @param nom le nom de famille (ne doit pas être null)
      * @param prenom le prénom (ne doit pas être null)
-     * @param age l'âge (doit être supérieur à 18)
+     * @param age l'âge (doit être supérieur ou égal à 18)
      * @param specialisation la spécialisation (ne doit pas être null)
      * @throws NullPointerException si le nom, le prénom ou la spécialisation est null
-     * @throws IllegalArgumentException si l'âge n'est pas supérieur à 18
+     * @throws IllegalArgumentException si l'âge est inférieur à 18
      */
     public Evaluateur(String nom, String prenom, int age, Cout specialisation) {
         super(nom, prenom, age);
@@ -37,16 +37,19 @@ public class Evaluateur extends Personne {
         this.random = new Random();
     }
 
-    // Getter (pas de Setter car final)
+    /**
+     * Donne la spécialisation de l'évaluateur
+     *
+     * @return la spécialisation (type de coût)
+     */
     public Cout getSpecialisation() {
         return specialisation;
     }
 
     /**
-     * Évalue le coût d'un projet en fonction de la spécialisation.
-     * 
+     * Évalue et attribue un coût aléatoire à un projet selon la spécialisation
+     *
      * @param projet le projet à évaluer (ne doit pas être null)
-     * @return le coût évalué du projet
      * @throws NullPointerException si le projet est null
      */
     public void evaluerCout(Projet projet) {
@@ -54,10 +57,8 @@ public class Evaluateur extends Personne {
             throw new NullPointerException("Le projet ne peut pas être null");
         }
 
-        // Stochastique (random)
         int cout = random.nextInt(MAX_COUT - MIN_COUT + 1) + MIN_COUT;
         projet.setCout(specialisation, cout);
-
     }
 
 }

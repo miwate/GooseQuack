@@ -19,17 +19,24 @@ public class Elu extends Personne {
     
     /**
      * Construit un élu.
-     * 
+     *
      * @param nom le nom de famille (ne doit pas être null)
      * @param prenom le prénom (ne doit pas être null)
-     * @param age l'âge (doit être supérieur à 18)
+     * @param age l'âge (doit être supérieur ou égal à 18)
+     * @throws NullPointerException si le nom ou le prénom est null
+     * @throws IllegalArgumentException si l'âge est inférieur à 18
      */
     public Elu(String nom, String prenom, int age) {
         super(nom, prenom, age);
         this.random = new Random();
     }
 
-    // Action de l'elu
+    /**
+     * Évalue et attribue un bénéfice aléatoire à un projet
+     *
+     * @param projet le projet à évaluer (ne doit pas être null)
+     * @throws NullPointerException si le projet est null
+     */
     public void evaluerBenefice(Projet projet) {
         if (projet == null) {
             throw new NullPointerException("Le projet ne peut pas être null");

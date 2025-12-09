@@ -10,7 +10,13 @@ import java.util.Arrays;
  */
 
 public class SacADosCalculs {
-    // Pour les couts avec garde-fous
+
+    /**
+     * Donne la somme des coûts
+     *
+     * @param couts le tableau des coûts
+     * @return la somme des coûts, ou 0 si le tableau est null ou vide
+     */
     public static int sommeCouts(int[] couts) {
         if (couts == null || couts.length == 0) {
             return 0;
@@ -18,7 +24,12 @@ public class SacADosCalculs {
         return Arrays.stream(couts).sum();
     }
 
-    // Pareillement
+    /**
+     * Donne le maximum des coûts
+     *
+     * @param couts le tableau des coûts
+     * @return le coût maximum, ou 1 si le tableau est null ou vide
+     */
     public static int maxCouts(int[] couts) {
         if (couts == null || couts.length == 0) {
             return 1;
