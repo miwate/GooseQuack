@@ -29,6 +29,10 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
+tasks.named('run') {
+    standardInput = System.in
+}
+
 javadoc {
     options {
         footer = '<a href="https://github.com/miwate/GooseQuack">Repo GitHub</a>'
