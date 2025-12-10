@@ -84,20 +84,19 @@ public class Objet {
     }
     
     @Override
-    public bolean equals(Object o){
+    public boolean equals(Object o){
         if (this==o){
             return true;
         }
-
         if (o==null || getClass() != o.getClass()){
             return false;
         }
         Objet objet=(Objet) o;
-        return utilite==objet.utilite && java.util.Arrays.equals(couts,objet.couts);
+        return utilite==object.utilite && java.util.Arrays.equals(couts,objet.couts);
     }
     
     @Override
     public int hashCode(){
-        return java.util.objets.hash(utilite,java.util.Arrays.hashCode(couts));
-        }
+        return java.util.objects.hash(utilite,java.util.Arrays.hashCode(couts));
+    }
 }
