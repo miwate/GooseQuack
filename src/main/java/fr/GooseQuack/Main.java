@@ -14,6 +14,7 @@ import fr.GooseQuack.equipe.Expert;
 import fr.GooseQuack.equipe.Secteur;
 import fr.GooseQuack.sacados.Objet;
 import fr.GooseQuack.sacados.SacADos;
+import fr.GooseQuack.solveur.glouton.ComparatorfMV;
 import fr.GooseQuack.solveur.glouton.ComparatorfMax;
 import fr.GooseQuack.solveur.glouton.ComparatorfSomme;
 import fr.GooseQuack.solveur.glouton.GloutonAjoutSolver;
@@ -37,36 +38,34 @@ public class Main {
                 System.out.println("2. Résolution d'un problème de maximisation à partir d'un fichier");
                 System.out.println("3. Quitter.");
 
-                if (scanner.hasNextLine()) {
-                    String entree = scanner.nextLine();
-                    int choix = Integer.parseInt(entree);
 
-                    switch (choix) {
-                        case 1 :
-                            simulationEquipe(scanner);
-                            break;
-                        case 2 :
-                            resolutionFichier(scanner);
-                            break;
-                        case 3 :
-                            running = false;
-                            System.out.println("Fin de l'exécution.");
-                            break;
-                        default :
-                            System.out.println("Veuillez saisir un nom correspondant aux choix disponibles !");
-                    }
+                String entree = scanner.nextLine().trim();
+                if (entree.isEmpty()) {
+                    continue;
                 }
-                else {
-                    System.err.println("Erreur : Pas d'entrée détectée. Fin.");
-                    running = false;
-                    break;
-                }
+                int choix = Integer.parseInt(entree);
 
+                switch (choix) {
+                    case 1 :
+                        simulationEquipe(scanner);
+                        break;
+                    case 2 :
+                        resolutionFichier(scanner);
+                        break;
+                    case 3 :
+                        running = false;
+                        System.out.println("Fin de l'exécution.");
+                        break;
+                    default :
+                        System.out.println("Veuillez saisir un nom correspondant aux choix disponibles (1 à 3) !");
+                }
             } catch (NumberFormatException e) {
                 System.out.println("Erreur : Nombre entier attendu.");
+            } catch (java.util.NoSuchElementException e) {
+                    System.out.println("Arrêt forcé.");
+                    running = false;
             } catch (Exception e) {
                 System.err.println("Erreur : " + e.getMessage());
-                // e.printStackTrace();
             }
         }
         scanner.close();
@@ -105,7 +104,7 @@ public class Main {
         int budgetEconomique = 1000;
         int budgetSocial = 1000;
         int budgetEnvironnemental = 1000;
-        System.out.println("Budgets :\nEconomique - " + budgetEconomique + "\nSocial - " + budgetSocial + "\nEnvironnemental - " + budgetEnvironnemental);
+        System.out.println("\tBudgets :\nEconomique : " + budgetEconomique + "\nSocial : " + budgetSocial + "\nEnvironnemental : " + budgetEnvironnemental);
 
         try {
             SacADos sac = VersSacADos.versTypeCout(equipe.getProjets(), budgetEconomique, budgetSocial, budgetEnvironnemental);
@@ -117,12 +116,23 @@ public class Main {
 
     public static void executionSolveur(SacADos sac, Scanner scanner) {
         System.out.println("== Menu - Choix du solveur ==");
-        System.out.println("1. Méthode Gloutonne par Ajout (Tri par \"Somme\")");
-        System.out.println("2. Méthode Gloutonne par Ajout (Tri par \"Max\")");
-        System.out.println("3. Méthode Gloutonne par Retrait (Tri par \"Somme\")");
-        System.out.println("4. Méthode Gloutonne par Retrait (Tri par \"Max\")");
+        System.out.println("1. Méthode Gloutonne par Ajout (Tri par \"Somme\" / f_Somme)");
+        System.out.println("2. Méthode Gloutonne par Ajout (Tri par \"Max\") / f_Max");
+        System.out.println("3. Méthode Gloutonne par Retrait (Retrait & Ajout par \"Somme\" / f_Somme)");
+        System.out.println("4. Méthode Gloutonne par Retrait (Retrait & Ajout par \"Max\") / / f_Max");
+        System.out.println("5. Méthode Gloutonne par Retrait PERSONNALISÉE");
+        System.out.println("6. HIll Climbing");
 
-        int choix = Integer.parseInt(scanner.nextLine());
+        int choix = -1;
+        try {
+            String ligne = scanner.nextLine().trim();
+            if (!ligne.isEmpty()) {
+                choix = Integer.parseInt(ligne);
+            }
+        } catch (NumberFormatException e) {
+            System.err.println("Erreur (Type de l'entrée) : " + e.getMessage());
+        }
+
         List<Objet> solutionS = new ArrayList<>();
 
         // long debut = System.currentTimeMillis();
@@ -148,6 +158,16 @@ public class Main {
             case 4 :
                 solutionS = solverRetrait.methodeParRetrait(sac, comparatorfMax, comparatorfMax);
                 break;
+            case 5 :
+                java.util.Comparator<Objet> comparatorAjout = quelComparateur(scanner, sac, "d'ajout");
+                java.util.Comparator<Objet> comparatorRetrait = quelComparateur(scanner, sac, "de retrait");
+
+                System.out.println("Exécution de la méthode par Retrait selon les choix de l'user.");
+                solutionS = solverRetrait.methodeParRetrait(sac, comparatorAjout, comparatorRetrait);
+                break;
+            case 6 :
+                System.out.println("Hill Climbing PAS ENCORE IMPLÉMENTÉE");
+                break;
             default :
                 System.out.println("Méthode non Implémentée.");
                 return;
@@ -172,7 +192,7 @@ public class Main {
         System.out.println("== Chargement du fichier ==");
         System.out.println("Saisir le chemin du fichier : ");
         
-        String chemin = scanner.nextLine();
+        String chemin = scanner.nextLine().trim();
 
         try {
             SacADos sac = VersSacADos.loadFichier(chemin);
@@ -185,55 +205,35 @@ public class Main {
             System.err.println("Erreur (fichier invalide) : " + e.getMessage());
         }
     }
-}
 
-    /*
-        // Tests des algorithmes gloutons
-        List<Objet> objetsTest = new ArrayList<>();
-
-        objetsTest.add(new Objet(300, new int[] {100, 290, 25}));
-        objetsTest.add(new Objet(840, new int[] {1000, 400, 15}));
-        objetsTest.add(new Objet(300, new int[] {400, 120, 5}));
-        objetsTest.add(new Objet(100, new int[] {50, 5, 3}));
-        objetsTest.add(new Objet(1200, new int[] {770, 880, 40}));
-        objetsTest.add(new Objet(300, new int[] {100, 290, 30}));
-        objetsTest.add(new Objet(100, new int[] {10, 210, 9}));
-
-        int[] bud = {1100,500,150};
-
-        SacADos sac = new SacADos(3, bud, objetsTest);
-
-        System.out.println("Budget test : " + Arrays.toString(bud));
-
-        for (int l = 0; l < objetsTest.size(); l++) {
-            Objet obj = objetsTest.get(l);
-            System.out.printf("Objet %d \t Utilité %d \t Coûts {%d,%d,%d}\n", l, obj.getUtilite(), obj.getCouts()[0], obj.getCouts()[1], obj.getCouts()[2]);
+    // UTILITAIRE : Choix de l'utilisateur pour le Critere utilise
+    private static java.util.Comparator<Objet> quelComparateur(Scanner scanner, SacADos sac, String ajoutOuretrait) {
+        System.out.println(" -- Quel critère " + ajoutOuretrait + " souhaitez-vous utiliser ? -- ");
+        System.out.println("1. f_Somme (Utilité / Somme des coûts)");
+        System.out.println("2. f_Max (Utilité / Max des coûts)");
+        System.out.println("3. f_MV (Utilité / Max de Violation du budget)");
+        
+        int choix = -1;
+        try {
+            String ligne = scanner.nextLine().trim();
+            if (!ligne.isEmpty()) {
+                choix = Integer.parseInt(ligne);
+            }
+        } catch (NumberFormatException e) {
+            System.err.println("Erreur (Type de l'entrée) : " + e.getMessage());
         }
-
-        GloutonRetraitSolver solver = new GloutonRetraitSolver();
-        ComparatorfSomme compSomme = new ComparatorfSomme();
-        ComparatorfMax compMax = new ComparatorfMax();
-
-        // Méthode Par Retrait par f_Somme
-        List<Objet> res1 = solver.methodeParRetrait(sac, compSomme, compSomme);
-        System.out.println("ComparatorfSomme : " + res1.size() + " objets");
-        int util1 = 0;
-        for (Objet o : res1) {
-            util1 += o.getUtilite();
+        
+        switch (choix) {
+            case 1 : 
+                return new ComparatorfSomme();
+            case 2 :
+                return new ComparatorfMax();
+            case 3 :
+                return new ComparatorfMV(sac, sac.getObjets());
+            default :
+                System.out.println("/////// Choix inconnu, utilisons le critère de f_Somme");
+                return new ComparatorfSomme();
         }
-        System.out.println("\t Utilité totale : " + util1);
-
-        // Méthode Par Retrait par f_Max
-        List<Objet> res2 = solver.methodeParRetrait(sac, compMax, compMax);
-        System.out.println("ComparatorfMax : " + res2.size() + " objets");
-        int util2 = 0;
-        for (Objet o : res2) {
-            util2 += o.getUtilite();
-        }
-        System.out.println("\t Utilité totale : " + util2);
-
     }
-
 }
 
-*/
