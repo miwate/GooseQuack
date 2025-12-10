@@ -83,20 +83,32 @@ public class Objet {
         return couts.length;
     }
     
+    /**
+     * Vérifie l'égalité entre cet objet et un autre objet
+     * Deux objets sont égaux s'ils ont la même utilité et les mêmes coûts pour toutes les dimensions
+     *
+     * @param o l'objet à comparer
+     * @return true si les objets sont égaux, false sinon
+     */
     @Override
-    public boolean equals(Object o){
-        if (this==o){
+    public boolean equals(Object o) {
+        if (this == o) {
             return true;
         }
-        if (o==null || getClass() != o.getClass()){
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Objet objet=(Objet) o;
-        return utilite==object.utilite && java.util.Arrays.equals(couts,objet.couts);
+        Objet objet = (Objet) o;
+        return utilite == objet.utilite && java.util.Arrays.equals(couts, objet.couts);
     }
-    
+
+    /**
+     * Calcule le code de hash de l'objet
+     *
+     * @return le code de hachage
+     */
     @Override
-    public int hashCode(){
-        return java.util.objects.hash(utilite,java.util.Arrays.hashCode(couts));
+    public int hashCode() {
+        return java.util.Objects.hash(utilite, java.util.Arrays.hashCode(couts));
     }
 }
