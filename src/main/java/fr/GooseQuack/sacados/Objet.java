@@ -102,6 +102,12 @@ public class Objet {
         return utilite == objet.utilite && java.util.Arrays.equals(couts, objet.couts);
     }
 
+
+    /**
+     * Calcule le code de hash de l'objet
+     *
+     * @return le code de hachage
+     */
     @Override
     public int hashCode() {
         return java.util.Objects.hash(utilite, java.util.Arrays.hashCode(couts));
