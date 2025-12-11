@@ -157,7 +157,7 @@ public class EquipeMunicipale {
         
         // Parcours de toutes les propositions des experts
         for (Expert expert : this.getExperts()) {
-            String titre = "Proposition de " +  expert.getPrenom() + expert.getNom() + " (" + expert.getCompetence().getNom() + ")";
+            String titre = "Proposition de " +  expert.getPrenom() + " " + expert.getNom() + " (" + expert.getCompetence().getNom() + ")";
             String description = "Proposition générée pour le secteur " + expert.getCompetence().getNom();
             Projet projetActuel = expert.propositionSecteur(
                 titre, description, expert.getCompetence());

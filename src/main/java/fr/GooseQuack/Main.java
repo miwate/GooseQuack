@@ -2,7 +2,6 @@ package fr.GooseQuack;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -19,8 +18,6 @@ import fr.GooseQuack.solveur.glouton.ComparatorfMax;
 import fr.GooseQuack.solveur.glouton.ComparatorfSomme;
 import fr.GooseQuack.solveur.glouton.GloutonAjoutSolver;
 import fr.GooseQuack.solveur.glouton.GloutonRetraitSolver;
-import jdk.jshell.spi.SPIResolutionException;
-
 
 public class Main {
 
@@ -47,7 +44,33 @@ public class Main {
 
                 switch (choix) {
                     case 1 :
-                        simulationEquipe(scanner);
+                        System.out.println("{1} Simulation d'une équipe municipale PAR DÉFAUT");
+                        System.out.println("{2} Simulation d'une équipe municipale PAR DÉFAUT (Budget PERSONNALISÉ)");
+                        System.out.println("{3} Simulation d'une équipe municipale PERSONNALISÉ)");
+
+                        int parDefOuPerso = -1;
+                        try {
+                            String entreeDefOuPerso = scanner.nextLine().trim();
+                            if (!entreeDefOuPerso.isEmpty()) {
+                                parDefOuPerso = Integer.parseInt(entreeDefOuPerso);
+                            }
+                        } catch (NumberFormatException e) {
+                            System.err.println("Erreur (Type de l'entrée) : " + e.getMessage());
+                        }
+                        switch (parDefOuPerso) {
+                            case 1 :
+                                simulationEquipe(scanner);
+                                break;
+                            case 2 : 
+                                simulationEquipeBudgetPerso(scanner);
+                                break;
+                            case 3 : 
+                                simulationEquipePerso(scanner);
+                                break;
+                            default :
+                                System.out.println("Veuillez saisir un nom correspondant aux choix disponibles (1 à 3) !");
+                        }
+
                         break;
                     case 2 :
                         resolutionFichier(scanner);
@@ -71,7 +94,7 @@ public class Main {
         scanner.close();
     }
 
-    // Choix 1 :
+    // Choix 1.1 : Simulation par défaut (budget default)
     public static void simulationEquipe(Scanner scanner) {
         // Instances d'exemple :
         Elu elu = new Elu("Gilbert", "Hugo", 34);
@@ -94,12 +117,10 @@ public class Main {
             System.err.println("Echec de la construction de l'équipe : " + e.getMessage()); 
         }
         
-        System.out.println("/////// DÉBUT : Cycle de Simulation //////");
         equipe.cycleSimulation();
-        System.out.println("/////// FIN : Cycle de Simulation //////");
         System.out.println("Nombre de projets : " + equipe.getProjets().size());
 
-        // Conversion Vers Sac A Dos
+        // Conversion Vers Sac A Dos : PERSONNALISATION DU BUDGET 
         System.out.println("Création des budgets...");
         int budgetEconomique = 1000;
         int budgetSocial = 1000;
@@ -111,6 +132,210 @@ public class Main {
             executionSolveur(sac, scanner);
         } catch (Exception e) {
             System.err.println("Erreur (conversion vers Sac à Dos) : " + e.getMessage());
+        }
+    }
+
+    // Choix 1.2 : Simulation par défaut (budget PERSO)
+    public static void simulationEquipeBudgetPerso(Scanner scanner) {
+        // Instances d'exemple :
+        Elu elu = new Elu("Gilbert", "Hugo", 34);
+        Evaluateur evaluateurEco = new Evaluateur("Gilbart","Huga", 33, Cout.ECONOMIQUE);
+        Evaluateur evaluateurSocial = new Evaluateur("Gilbort","Hugues", 32, Cout.SOCIAL);
+        Evaluateur evaluateurEnvironnement = new Evaluateur("Gilbirt","Hugwo", 31, Cout.ENVIRONNEMENTAL);
+        Expert expertSportSante = new Expert("Gilbertss", "Hugoss", 30, Secteur.SANTE, Secteur.SANTE);
+        Expert expertCultureEco= new Expert("Gilbertce", "Hugoce", 31, Secteur.CULTURE, Secteur.ATTRACTIVITE_ECONOMIQUE);
+
+        // Ajout des membres dans l'equipe :
+        EquipeMunicipale equipe = new EquipeMunicipale();
+        try {
+            equipe.setElu(elu);
+            equipe.addEvaluateur(evaluateurEco);
+            equipe.addEvaluateur(evaluateurSocial);
+            equipe.addEvaluateur(evaluateurEnvironnement);
+            equipe.addExpert(expertSportSante);
+            equipe.addExpert(expertCultureEco);
+        } catch (Exception e) {
+            System.err.println("Echec de la construction de l'équipe : " + e.getMessage()); 
+        }
+        
+        equipe.cycleSimulation();
+        System.out.println("Nombre de projets : " + equipe.getProjets().size());
+
+        // Conversion Vers Sac A Dos : PERSONNALISATION DU BUDGET 
+        System.out.println("Création des budgets...");
+        int budgetEconomique = entier(scanner, "le budget économique");
+        int budgetSocial = entier(scanner, "le budget social");
+        int budgetEnvironnemental = entier(scanner, "le budget environnemental");
+        System.out.println("\tBudgets :\nEconomique : " + budgetEconomique + "\nSocial : " + budgetSocial + "\nEnvironnemental : " + budgetEnvironnemental);
+
+        try {
+            SacADos sac = VersSacADos.versTypeCout(equipe.getProjets(), budgetEconomique, budgetSocial, budgetEnvironnemental);
+            executionSolveur(sac, scanner);
+        } catch (Exception e) {
+            System.err.println("Erreur (conversion vers Sac à Dos) : " + e.getMessage());
+        }
+    }
+
+    // Choix 1.3 : Simulation d'une équipe PERSONNALISÉE
+    public static void simulationEquipePerso(Scanner scanner) {
+        System.out.println("CRÉATION DE L'ÉQUIPE :");
+        EquipeMunicipale equipe = new EquipeMunicipale();
+
+        try {
+            // 1. Création de l'élu
+            System.out.println("-- Création de l'élu :");
+            String nomElu = texte(scanner, "son nom");
+            String prenomElu = texte(scanner, "son prénom");
+            int ageElu = entier(scanner, "son âge");
+            Elu elu = new Elu(nomElu, prenomElu, ageElu);
+            equipe.setElu(elu);
+            
+            // 2. Création des Evaluateurs
+            System.out.println("-- Création des Évaluateurs :");
+
+            // Evaluateur économique :
+            System.out.println("---- Création de l'évaluateur économique :");
+            equipe.addEvaluateur(new Evaluateur(
+                texte(scanner, "le nom de l'évaluateur économique : "), 
+                texte(scanner, "son prénom : "), 
+                entier(scanner, "son âge : "),
+                Cout.ECONOMIQUE
+                )
+            );
+
+            // Evaluateur social :
+            System.out.println("---- Création de l'évaluateur social :");
+            equipe.addEvaluateur(new Evaluateur(
+                texte(scanner, "le nom de l'évaluateur social : "), 
+                texte(scanner, "son prénom : "), 
+                entier(scanner, "son âge : "),
+                Cout.SOCIAL
+                )
+            );
+
+            // Evaluateur environnemental :
+            System.out.println("---- Création de l'évaluateur environnemental :");
+            equipe.addEvaluateur(new Evaluateur(
+                texte(scanner, "le nom de l'évaluateur environnemental : "), 
+                texte(scanner, "son prénom : "), 
+                entier(scanner, "son âge : "),
+                Cout.ENVIRONNEMENTAL    
+                )
+            );
+
+            // 3. Création des Experts
+            System.out.println("-- Création des Experts :");
+            boolean ajoutExperts = true;
+
+            while (ajoutExperts) {
+                System.out.println("---- Nouvel Expert : ");
+
+                // D'abord les secteurs :
+                List<Secteur> secteursExpert = new ArrayList<>();
+                boolean ajoutSecteurs = true;
+                System.out.println("Choix des compétences de l'expert : ");
+
+                while (ajoutSecteurs) {
+                    Secteur secteur = quelSecteur(scanner);
+                    if (secteur != null && !secteursExpert.contains(secteur)) {
+                        secteursExpert.add(secteur);
+                        System.out.println("\t Secteur ajouté !");
+                    }
+                    else if (secteur == null) {
+                        System.out.println("\t Secteur invalide.");
+                    }
+                    else {
+                        System.out.println("\t Secteur déjà existant.");
+                    }
+                    
+                    System.out.println("\t Souhaitez-vous ajouter un secteur pour cet expert ? (entrer N pour refuser)");
+                    String nouvSectOuiNon = scanner.nextLine().trim();
+                    if (nouvSectOuiNon.equalsIgnoreCase("n")) {
+                        ajoutSecteurs = false;
+                    } 
+                }
+
+                Secteur[] secteursExpertArray = secteursExpert.toArray(new Secteur[0]);
+                equipe.addExpert(new Expert(
+                    texte(scanner, "Nom de l'expert : "), 
+                    texte(scanner, "Son prénom : "), 
+                    entier(scanner, "Son âge : "),
+                    secteursExpertArray
+                    )
+                );
+
+                System.out.println("\t Souhaitez-vous ajouter nouvel expert ? (entrer N pour refuser)");
+                String nouvExpertOuiNon = scanner.nextLine().trim();
+                if (nouvExpertOuiNon.equalsIgnoreCase("n")) {
+                    ajoutExperts = false;
+                } 
+            }
+        
+        } catch (Exception e) {
+            System.err.println("Erreur (création de l'équipe) : " + e.getMessage());
+            return;
+        }
+
+        equipe.cycleSimulation();
+        System.out.println("Nombre de projets : " + equipe.getProjets().size());
+
+        // Conversion Vers Sac A Dos : PERSONNALISATION DU BUDGET 
+        System.out.println("Création des budgets...");
+        int budgetEconomique = entier(scanner, "le budget économique");
+        int budgetSocial = entier(scanner, "le budget social");
+        int budgetEnvironnemental = entier(scanner, "le budget environnemental");
+        System.out.println("==== Budgets : ====\nEconomique : " + budgetEconomique + "\nSocial : " + budgetSocial + "\nEnvironnemental : " + budgetEnvironnemental);
+        System.err.println("");
+
+        try {
+            SacADos sac = VersSacADos.versTypeCout(equipe.getProjets(), budgetEconomique, budgetSocial, budgetEnvironnemental);
+            executionSolveur(sac, scanner);
+        } catch (Exception e) {
+            System.err.println("Erreur (conversion vers Sac à Dos) : " + e.getMessage());
+        }
+    
+    }
+
+
+
+     // UTILITAIRE POUR 1.3
+    public static String texte(Scanner scanner, String str) {
+        System.out.println("\t Entrez " + str + " : ");
+        String text = scanner.nextLine().trim();
+        while (text.isEmpty()) {
+            System.out.println("Le texte ne peut pas être vide. Recommencez.");
+            text = scanner.nextLine().trim();
+        }
+        return text;
+    }
+
+    public static Secteur quelSecteur(Scanner scanner) {
+        System.out.println("\tListe des Secteurs :");
+        System.out.println("1. SPORT");
+        System.out.println("2. SANTE");
+        System.out.println("3. CULTURE");
+        System.out.println("4. EDUCATION");
+        System.out.println("5. ATTRACTIVITE ECONOMIQUE");
+
+        String entree = scanner.nextLine().trim();
+        try {
+            int choix = Integer.parseInt(entree);
+            switch (choix) {
+                case 1 :
+                    return Secteur.SPORT;
+                case 2 :
+                    return Secteur.SANTE;
+                case 3 :
+                    return Secteur.CULTURE;
+                case 4 :
+                    return Secteur.EDUCATION;
+                case 5 :
+                    return Secteur.ATTRACTIVITE_ECONOMIQUE;
+                default :
+                    return null;
+            }
+        } catch (Exception e) {
+            return null;
         }
     }
 
@@ -134,8 +359,6 @@ public class Main {
         }
 
         List<Objet> solutionS = new ArrayList<>();
-
-        // long debut = System.currentTimeMillis();
 
         // Instanciation : Comparateurs
         ComparatorfSomme comparatorfSomme = new ComparatorfSomme();
@@ -172,8 +395,7 @@ public class Main {
                 System.out.println("Méthode non Implémentée.");
                 return;
         }
-        
-        // long fin = System.currentTimeMillis();
+    
 
         if (solutionS != null) {
             int utiliteTotale = 0;
@@ -185,6 +407,32 @@ public class Main {
             System.out.println("== Fin ==");
         }
 
+    }
+
+
+    
+    // UTILITAIRE : Choix de l'utilisateur pour le Critere utilise
+    private static int entier(Scanner scanner, String infoVoulue) {
+        int valeur = 0;
+        boolean valeurPositive = false;
+
+        System.out.println("\tEntrez " + infoVoulue + " : ");
+
+        while (valeurPositive == false) {
+            String input = scanner.nextLine().trim();
+            try {
+                valeur = Integer.parseInt(input);
+                if (valeur > 0) {
+                    valeurPositive = true;
+                }
+                else {
+                    System.out.println(" **** Entrez un budget POSITIF !!! **** ");
+                }
+            } catch (NumberFormatException e) {
+                    System.out.println(" **** Entrez un budget ENTIER !!! **** ");
+            }
+        }
+        return valeur;
     }
 
     // Choix 2 :
@@ -231,7 +479,7 @@ public class Main {
             case 3 :
                 return new ComparatorfMV(sac, sac.getObjets());
             default :
-                System.out.println("/////// Choix inconnu, utilisons le critère de f_Somme");
+                System.out.println("/////// Choix inconnu, utilisons le critère de f_Somme (par défaut)");
                 return new ComparatorfSomme();
         }
     }
