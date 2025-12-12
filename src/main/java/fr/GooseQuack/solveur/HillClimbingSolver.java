@@ -7,15 +7,29 @@ import fr.GooseQuack.sacados.SacADos;
 import fr.GooseQuack.solveur.glouton.ComparatorfSomme;
 import fr.GooseQuack.solveur.glouton.GloutonAjoutSolver;
 
+/** 
+*Classe HillClimbing
+*@author Christian (christianlikq-del)
+*/
+
 public class HillClimbingSolver {
-    private int f_S(List<Objet> S) { // avec S obtenue par gluton 
+
+/** 
+*Calculs la somme d'utilité d'une solution S
+*@param S : la solution obtenue par glouton
+*/
+    private int f_S(List<Objet> S) { // avec S obtenue par glouton 
         int somme_utilite = 0;
         for (Objet o : S) {
             somme_utilite += o.getUtilite();
         }
         return somme_utilite; // renvoie l'utilité totale de S 
     }
-
+/** 
+*Détermine si le budghet est-il respecté
+*@param sac : le sac à dos 
+*@param S : une solution 
+*/
     private boolean RespectBudgets(SacADos sac, List<Objet> S){
         int dim= sac.getDimension(); 
         int[] liste_budgets= sac.getBudgets();
@@ -34,7 +48,11 @@ public class HillClimbingSolver {
         return true;
         
     }
-
+/**
+*Construit une liste de voisins d'une Solution S 
+*@param sac : le sac à dos 
+*@param S : solution 
+*/
     private List<List<Objet>> liste_voisins(SacADos sac, List<Objet> S){
         List<List<Objet>> liste_voisins = new ArrayList<>(); // liste ou contientra l'ensemble des voisins 
         List<Objet> liste_objets_jouables= sac.getObjets(); // liste des objets ajoutable, supprimmable et echangeable 
@@ -65,7 +83,12 @@ public class HillClimbingSolver {
         return liste_voisins;
     }//private liste voisins 
 
-    public List<Objet> solve (SacADos sac, List<Objet> sol_initiale){ // sol_initiale : sol par gluton 
+/**
+*Applique l'algo prenant une solution S, explore les voisins de S puis retourne une solution optimale 
+*@param sac: sac à dos 
+*@param sol_initiale : une solution initiale par glouton 
+*/
+    public List<Objet> solve (SacADos sac, List<Objet> sol_initiale){ // sol_initiale : sol par glouton 
         List<Objet>  solution = new ArrayList<>(sol_initiale);
         int fdeS = f_S(solution);
 
@@ -92,6 +115,11 @@ public class HillClimbingSolver {
             fdeS=fdeS_max;
         }
     }
+
+/**
+*Programme principal
+*Test 
+*/
     public static void main (String[] args ){
 
         List<Objet> liste_objets= new ArrayList<>();
