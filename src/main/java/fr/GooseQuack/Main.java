@@ -13,6 +13,7 @@ import fr.GooseQuack.equipe.Expert;
 import fr.GooseQuack.equipe.Secteur;
 import fr.GooseQuack.sacados.Objet;
 import fr.GooseQuack.sacados.SacADos;
+import fr.GooseQuack.sacados.SacADosCalculs;
 import fr.GooseQuack.solveur.glouton.ComparatorfMV;
 import fr.GooseQuack.solveur.glouton.ComparatorfMax;
 import fr.GooseQuack.solveur.glouton.ComparatorfSomme;
@@ -46,7 +47,7 @@ public class Main {
                     case 1 :
                         System.out.println("{1} Simulation d'une équipe municipale PAR DÉFAUT");
                         System.out.println("{2} Simulation d'une équipe municipale PAR DÉFAUT (Budget PERSONNALISÉ)");
-                        System.out.println("{3} Simulation d'une équipe municipale PERSONNALISÉ)");
+                        System.out.println("{3} Simulation d'une équipe municipale PERSONNALISÉ");
 
                         int parDefOuPerso = -1;
                         try {
@@ -196,9 +197,9 @@ public class Main {
             // Evaluateur économique :
             System.out.println("---- Création de l'évaluateur économique :");
             equipe.addEvaluateur(new Evaluateur(
-                texte(scanner, "le nom de l'évaluateur économique : "), 
-                texte(scanner, "son prénom : "), 
-                entier(scanner, "son âge : "),
+                texte(scanner, "le nom de l'évaluateur économique"), 
+                texte(scanner, "son prénom"), 
+                entier(scanner, "son âge"),
                 Cout.ECONOMIQUE
                 )
             );
@@ -206,9 +207,9 @@ public class Main {
             // Evaluateur social :
             System.out.println("---- Création de l'évaluateur social :");
             equipe.addEvaluateur(new Evaluateur(
-                texte(scanner, "le nom de l'évaluateur social : "), 
-                texte(scanner, "son prénom : "), 
-                entier(scanner, "son âge : "),
+                texte(scanner, "le nom de l'évaluateur social"), 
+                texte(scanner, "son prénom"), 
+                entier(scanner, "son âge"),
                 Cout.SOCIAL
                 )
             );
@@ -216,9 +217,9 @@ public class Main {
             // Evaluateur environnemental :
             System.out.println("---- Création de l'évaluateur environnemental :");
             equipe.addEvaluateur(new Evaluateur(
-                texte(scanner, "le nom de l'évaluateur environnemental : "), 
-                texte(scanner, "son prénom : "), 
-                entier(scanner, "son âge : "),
+                texte(scanner, "le nom de l'évaluateur environnemental"), 
+                texte(scanner, "son prénom"), 
+                entier(scanner, "son âge"),
                 Cout.ENVIRONNEMENTAL    
                 )
             );
@@ -257,9 +258,9 @@ public class Main {
 
                 Secteur[] secteursExpertArray = secteursExpert.toArray(new Secteur[0]);
                 equipe.addExpert(new Expert(
-                    texte(scanner, "Nom de l'expert : "), 
-                    texte(scanner, "Son prénom : "), 
-                    entier(scanner, "Son âge : "),
+                    texte(scanner, "le nom de l'expert"), 
+                    texte(scanner, "son prénom"), 
+                    entier(scanner, "son âge"),
                     secteursExpertArray
                     )
                 );
@@ -288,7 +289,7 @@ public class Main {
         System.err.println("");
 
         try {
-            SacADos sac = VersSacADos.versTypeCout(equipe.getProjets(), budgetEconomique, budgetSocial, budgetEnvironnemental);
+            SacADos sac = VersSacADos.versTypeCout(equipe.getProjets(), budgetEconomique, budgetSocial, budgetEnvironnemental); 
             executionSolveur(sac, scanner);
         } catch (Exception e) {
             System.err.println("Erreur (conversion vers Sac à Dos) : " + e.getMessage());
@@ -389,7 +390,32 @@ public class Main {
                 solutionS = solverRetrait.methodeParRetrait(sac, comparatorAjout, comparatorRetrait);
                 break;
             case 6 :
-                System.out.println("Hill Climbing PAS ENCORE IMPLÉMENTÉE");
+                System.out.println("== Exécution : Hill Climbing");
+                System.out.println("==== Génération de la solution initiale... (par MAX) ====");
+                
+                // Génération de la solution initiale
+                GloutonAjoutSolver solutionAjout = new GloutonAjoutSolver();
+                ComparatorfMax comparatorMax = new ComparatorfMax();
+                List<Objet> solutionInitiale = solutionAjout.MethodeParAjout(sac, comparatorMax);
+                int utiliteInitiale = SacADosCalculs.sommeUtilite(solutionInitiale);
+
+                System.out.println("Solution initiale créée.");
+
+                // Hill Climbing    
+                System.out.println("\tLancement de l'algorithme Hill Climbing...");
+                HillClimbingSolver hillClimbing = new HillClimbingSolver();
+
+                solutionS = hillClimbing.solve(sac, solutionInitiale);
+                int utiliteS = SacADosCalculs.sommeUtilite(solutionS);
+
+                int gain = utiliteS - utiliteInitiale;
+                if (gain > 0) {
+                    System.out.println("--> Amélioration de +" + gain + " !");
+                }
+                else {
+                    System.out.println("--> Aucune amélioration, maximum déjà atteint.");
+                }
+
                 break;
             default :
                 System.out.println("Méthode non Implémentée.");
@@ -408,7 +434,6 @@ public class Main {
         }
 
     }
-
 
     
     // UTILITAIRE : Choix de l'utilisateur pour le Critere utilise
