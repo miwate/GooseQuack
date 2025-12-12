@@ -38,6 +38,12 @@ public class SacADosCalculs {
         return Arrays.stream(couts).max().orElse(1);
     }
 
+    /**
+     * Donne la somme des utilités d'une liste d'objets
+     *
+     * @param objets la liste d'objets
+     * @return la somme des utilités du sac d'objets
+     */
     public static int sommeUtilite(List<Objet> objets) {
         if (objets == null || objets.isEmpty()) {
             return 0;

@@ -104,6 +104,11 @@ public class Main {
     }
 
     // Choix 1.1 : Simulation par défaut (budget default)
+    /**
+     * Choix 1.1 : Simulation par défaut (budget par défaut aussi)
+     *
+     * @param scanner seulement l'entrée de l'utilisateur
+     */
     public static void simulationEquipe(Scanner scanner) {
         // Instances d'exemple :
         Elu elu = new Elu("Gilbert", "Hugo", 34);
@@ -145,6 +150,11 @@ public class Main {
     }
 
     // Choix 1.2 : Simulation par défaut (budget PERSO)
+    /**
+     * Choix 1.2 : Simulation par défaut (budget personnalisé)
+     *
+     * @param scanner seulement l'entrée de l'utilisateur
+     */
     public static void simulationEquipeBudgetPerso(Scanner scanner) {
         // Instances d'exemple :
         Elu elu = new Elu("Gilbert", "Hugo", 34);
@@ -186,6 +196,12 @@ public class Main {
     }
 
     // Choix 1.3 : Simulation d'une équipe PERSONNALISÉE
+    /**
+     * Choix 1.3 : Simulation d'une équipe PERSONNALISÉE
+     *
+     * @param scanner seulement l'entrée de l'utilisateur
+     */
+
     public static void simulationEquipePerso(Scanner scanner) {
         System.out.println("CRÉATION DE L'ÉQUIPE :");
         EquipeMunicipale equipe = new EquipeMunicipale();
@@ -305,9 +321,13 @@ public class Main {
     
     }
 
-
-
-     // UTILITAIRE POUR 1.3
+    /**
+     * Demande à l'utilisateur une chaîne de caractère correspondant à l'information recherchée par l'argument str de la fonction
+     *
+     * @param scanner entrée utilisateur
+     * @param str information recherchée
+     * @return entrée de l'utilisateur
+     */
     public static String texte(Scanner scanner, String str) {
         System.out.println("\t Entrez " + str + " : ");
         String text = scanner.nextLine().trim();
@@ -318,6 +338,12 @@ public class Main {
         return text;
     }
 
+    /**
+     * Demande à l'utilisateur de choisir le secteur de compétence d'un expert 
+     * 
+     * @param scanner entrée utilisateur
+     * @return secteur choisi par l'utilisateur
+     */
     public static Secteur quelSecteur(Scanner scanner) {
         System.out.println("\tListe des Secteurs :");
         System.out.println("1. SPORT");
@@ -348,6 +374,12 @@ public class Main {
         }
     }
 
+    /**
+     * Exécution d'un solveur choisi selon l'utilisateur
+     * 
+     * @param sac Sac à dos utilisé
+     * @param scanner entrée utilisateur
+     */
     public static void executionSolveur(SacADos sac, Scanner scanner) {
         System.out.println("== Menu - Choix du solveur ==");
         System.out.println("1. Méthode Gloutonne par Ajout (Tri par \"Somme\" / f_Somme)");
@@ -443,8 +475,13 @@ public class Main {
 
     }
 
-    
-    // UTILITAIRE : Choix de l'utilisateur pour le Critere utilise
+    /**
+     * Demande à l'utilisateur un entier correspondant à l'information recherchée par l'argument infoVoulue de la fonction
+     *
+     * @param scanner entrée utilisateur
+     * @param infoVoulue information recherchée
+     * @return entrée de l'utilisateur
+     */
     private static int entier(Scanner scanner, String infoVoulue) {
         int valeur = 0;
         boolean valeurPositive = false;
@@ -469,6 +506,11 @@ public class Main {
     }
 
     // Choix 2 :
+    /**
+     * Exécution d'un solveur choisi selon l'utilisateur sur le fichier de son choix 
+     * 
+     * @param scanner entrée utilisateur
+     */
     private static void resolutionFichier(Scanner scanner) {
         System.out.println("== Chargement du fichier ==");
         System.out.println("Saisir le chemin du fichier : ");
@@ -487,7 +529,14 @@ public class Main {
         }
     }
 
-    // UTILITAIRE : Choix de l'utilisateur pour le Critere utilise
+    /**
+     * Choix du comparateur (critère) choisi par l'utilisateur
+     * 
+     * @param scanner entrée utilisateur
+     * @param sac Sac à dos utilisé
+     * @param ajoutOuretrait selon la phase d'ajout ou de retrait
+     * @return le comparateur choisi par l'utilisateur
+     */
     private static java.util.Comparator<Objet> quelComparateur(Scanner scanner, SacADos sac, String ajoutOuretrait) {
         System.out.println(" -- Quel critère " + ajoutOuretrait + " souhaitez-vous utiliser ? -- ");
         System.out.println("1. f_Somme (Utilité / Somme des coûts)");
