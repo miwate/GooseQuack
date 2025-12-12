@@ -20,6 +20,14 @@ import fr.GooseQuack.solveur.glouton.ComparatorfSomme;
 import fr.GooseQuack.solveur.glouton.GloutonAjoutSolver;
 import fr.GooseQuack.solveur.glouton.GloutonRetraitSolver;
 
+/**
+ * Classe : Main.
+ * 
+ * @author Drys (lidr05)
+ * 
+ * @version 1.0
+ */
+
 public class Main {
 
     public static void main(String[] args) {
