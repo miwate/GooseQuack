@@ -1,6 +1,7 @@
 package fr.GooseQuack.sacados;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Classe utilitaire implémentant la somme et le maximum d'un tableau.
@@ -35,5 +36,17 @@ public class SacADosCalculs {
             return 1;
         }
         return Arrays.stream(couts).max().orElse(1);
+    }
+
+    public static int sommeUtilite(List<Objet> objets) {
+        if (objets == null || objets.isEmpty()) {
+            return 0;
+        }
+
+        int somme = 0;
+        for (Objet o : objets) {
+            somme += o.getUtilite();
+        }
+        return somme;
     }
 }
