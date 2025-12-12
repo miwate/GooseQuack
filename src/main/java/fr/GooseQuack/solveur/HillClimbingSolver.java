@@ -1,31 +1,38 @@
 package fr.GooseQuack.solveur;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import fr.GooseQuack.sacados.Objet;
 import fr.GooseQuack.sacados.SacADos;
-import fr.GooseQuack.solveur.glouton.ComparatorfSomme;
-import fr.GooseQuack.solveur.glouton.GloutonAjoutSolver;
 
 
 /**
- * Classe pour l'algorithme Hill Climbing.
+ * Classe HillClimbing
  * 
- * @author 
- * 
- * @version 1.0
+ * @author Christian (christianlikq-del)
  */
 
 public class HillClimbingSolver {
-    private int f_S(List<Objet> S) { // avec S obtenue par gluton 
+
+    /**
+     * Calcule la somme d'utilité d'une solution S
+     * @param S : la solution obtenue par glouton
+     * @return la somme d'utilité totale de S
+     */
+    private int f_S(List<Objet> S) { // avec S obtenue par glouton 
         int somme_utilite = 0;
         for (Objet o : S) {
             somme_utilite += o.getUtilite();
         }
-        return somme_utilite; // renvoie l'utilité totale de S 
+        return somme_utilite; // renvoie l'utilité totale de S
     }
 
+    /**
+     * Détermine si le budget est-il respecté
+     * @param sac : le sac à dos
+     * @param S : une solution
+     * @return true si le budget est respecté, false sinon
+     */
     private boolean RespectBudgets(SacADos sac, List<Objet> S){
         int dim= sac.getDimension(); 
         int[] liste_budgets= sac.getBudgets();
@@ -42,9 +49,15 @@ public class HillClimbingSolver {
             }
         }
         return true;
-        
+
     }
 
+    /**
+     * Construit une liste de voisins d'une Solution S
+     * @param sac : le sac à dos
+     * @param S : solution
+     * @return la liste des voisins de S
+     */
     private List<List<Objet>> liste_voisins(SacADos sac, List<Objet> S){
         List<List<Objet>> liste_voisins = new ArrayList<>(); // liste ou contientra l'ensemble des voisins 
         List<Objet> liste_objets_jouables= sac.getObjets(); // liste des objets ajoutable, supprimmable et echangeable 
@@ -73,9 +86,15 @@ public class HillClimbingSolver {
             }// du if 1
         }// boucle for 1 
         return liste_voisins;
-    }//private liste voisins 
+    }//private liste voisins
 
-    public List<Objet> solve (SacADos sac, List<Objet> sol_initiale){ // sol_initiale : sol par gluton 
+    /**
+     * Applique l'algorithme prenant une solution S, explore les voisins de S puis retourne une solution optimale
+     * @param sac: sac à dos
+     * @param sol_initiale : une solution initiale par glouton
+     * @return la solution optimale trouvée par Hill Climbing
+     */
+    public List<Objet> solve (SacADos sac, List<Objet> sol_initiale){ // sol_initiale : sol par glouton 
         List<Objet>  solution = new ArrayList<>(sol_initiale);
         int fdeS = f_S(solution);
 
@@ -102,33 +121,8 @@ public class HillClimbingSolver {
             fdeS=fdeS_max;
         }
     }
-    public static void main (String[] args ){
 
-        List<Objet> liste_objets= new ArrayList<>();
-        int[] budget= {20,15,12};
-        Objet o1 = new Objet(10, new int [] {5,3,2});
-        Objet o2 = new Objet(12, new int [] {6,4,3});
-        Objet o3 = new Objet(20, new int [] {10,7,4});
-        Objet o4 = new Objet(15, new int [] {8,2,1});
-        liste_objets.add(o1);
-        liste_objets.add(o2);
-        liste_objets.add(o3);
-        liste_objets.add(o4);
-        SacADos mysac = new SacADos(3, budget,liste_objets);
-
-        GloutonAjoutSolver glouton= new GloutonAjoutSolver();
-        Comparator<Objet> comp= new ComparatorfSomme();
-        List<Objet> sol_0= glouton.MethodeParAjout(mysac, comp);
-        System.out.println("la solution initiale est :"+ sol_0);
-
-        HillClimbingSolver hc= new HillClimbingSolver();
-        List<Objet> sol_finale= hc.solve(mysac, sol_0);
-        System.out.println("la solution finale est :"+ sol_finale);    
-    };
-    
 }// class
-
-    
 
 
 
