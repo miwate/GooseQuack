@@ -145,6 +145,7 @@ public class EquipeMunicipale {
 
     // Methodes - Actions a proprement parler
     // Cette ligne a été écrite sur le trône.
+    
     /**
      * Exécute un cycle de simulation complet où chaque expert propose un projet,
      * les évaluateurs estiment les coûts et l'élu évalue le bénéfice
