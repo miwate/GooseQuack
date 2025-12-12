@@ -112,12 +112,12 @@ public class Main {
      */
     public static void simulationEquipe(Scanner scanner) {
         // Instances d'exemple :
-        Elu elu = new Elu("Gilbert", "Hugo", 34);
-        Evaluateur evaluateurEco = new Evaluateur("Gilbart","Huga", 33, Cout.ECONOMIQUE);
-        Evaluateur evaluateurSocial = new Evaluateur("Gilbort","Hugues", 32, Cout.SOCIAL);
-        Evaluateur evaluateurEnvironnement = new Evaluateur("Gilbirt","Hugwo", 31, Cout.ENVIRONNEMENTAL);
-        Expert expertSportSante = new Expert("Gilbertss", "Hugoss", 30, Secteur.SANTE, Secteur.SANTE);
-        Expert expertCultureEco= new Expert("Gilbertce", "Hugoce", 31, Secteur.CULTURE, Secteur.ATTRACTIVITE_ECONOMIQUE);
+        Elu elu = new Elu("Agnes", "Air", 34);
+        Evaluateur evaluateurEco = new Evaluateur("Blud","Bob", 33, Cout.ECONOMIQUE);
+        Evaluateur evaluateurSocial = new Evaluateur("Calculator","Cartman", 32, Cout.SOCIAL);
+        Evaluateur evaluateurEnvironnement = new Evaluateur("Derik","Daniel", 31, Cout.ENVIRONNEMENTAL);
+        Expert expertSportSante = new Expert("Einstein", "Eric", 30, Secteur.SANTE, Secteur.SANTE);
+        Expert expertCultureEco= new Expert("Foo", "Foobar", 31, Secteur.CULTURE, Secteur.ATTRACTIVITE_ECONOMIQUE);
 
         // Ajout des membres dans l'equipe :
         EquipeMunicipale equipe = new EquipeMunicipale();
@@ -158,12 +158,12 @@ public class Main {
      */
     public static void simulationEquipeBudgetPerso(Scanner scanner) {
         // Instances d'exemple :
-        Elu elu = new Elu("Gilbert", "Hugo", 34);
-        Evaluateur evaluateurEco = new Evaluateur("Gilbart","Huga", 33, Cout.ECONOMIQUE);
-        Evaluateur evaluateurSocial = new Evaluateur("Gilbort","Hugues", 32, Cout.SOCIAL);
-        Evaluateur evaluateurEnvironnement = new Evaluateur("Gilbirt","Hugwo", 31, Cout.ENVIRONNEMENTAL);
-        Expert expertSportSante = new Expert("Gilbertss", "Hugoss", 30, Secteur.SANTE, Secteur.SANTE);
-        Expert expertCultureEco= new Expert("Gilbertce", "Hugoce", 31, Secteur.CULTURE, Secteur.ATTRACTIVITE_ECONOMIQUE);
+        Elu elu = new Elu("Galilee", "Golshin", 34);
+        Evaluateur evaluateurEco = new Evaluateur("Haru","Hishin", 33, Cout.ECONOMIQUE);
+        Evaluateur evaluateurSocial = new Evaluateur("Ibai","Iteration", 32, Cout.SOCIAL);
+        Evaluateur evaluateurEnvironnement = new Evaluateur("Jack","Jacques", 31, Cout.ENVIRONNEMENTAL);
+        Expert expertSportSante = new Expert("Kawakami", "Keras", 30, Secteur.SANTE, Secteur.SANTE);
+        Expert expertCultureEco= new Expert("Matikanefukukitaru", "Mayano", 31, Secteur.CULTURE, Secteur.ATTRACTIVITE_ECONOMIQUE);
 
         // Ajout des membres dans l'equipe :
         EquipeMunicipale equipe = new EquipeMunicipale();
