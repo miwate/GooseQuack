@@ -14,6 +14,7 @@ import fr.GooseQuack.equipe.Secteur;
 import fr.GooseQuack.sacados.Objet;
 import fr.GooseQuack.sacados.SacADos;
 import fr.GooseQuack.sacados.SacADosCalculs;
+import fr.GooseQuack.solveur.HillClimbingSolver;
 import fr.GooseQuack.solveur.glouton.ComparatorfMV;
 import fr.GooseQuack.solveur.glouton.ComparatorfMax;
 import fr.GooseQuack.solveur.glouton.ComparatorfSomme;
