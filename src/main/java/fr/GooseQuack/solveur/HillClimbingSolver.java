@@ -1,5 +1,6 @@
 package fr.GooseQuack.solveur;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import fr.GooseQuack.sacados.Objet;
@@ -56,11 +57,11 @@ public class HillClimbingSolver {
      * Construit une liste de voisins d'une Solution S
      * @param sac : le sac à dos
      * @param S : solution
-     * @return la liste des voisins de S
+     * @return la liste de voisins de S
      */
     private List<List<Objet>> liste_voisins(SacADos sac, List<Objet> S){
         List<List<Objet>> liste_voisins = new ArrayList<>(); // liste ou contientra l'ensemble des voisins 
-        List<Objet> liste_objets_jouables= sac.getObjets(); // liste des objets ajoutable, supprimmable et echangeable 
+        List<Objet> liste_objets_jouables= sac.getObjets(); // liste de objets ajoutables, supprimmables et echangeables 
         for (Objet o : S){
             List<Objet> S_1 = new ArrayList<>(S);
             S_1.remove(o);
@@ -92,7 +93,7 @@ public class HillClimbingSolver {
      * Applique l'algorithme prenant une solution S, explore les voisins de S puis retourne une solution optimale
      * @param sac: sac à dos
      * @param sol_initiale : une solution initiale par glouton
-     * @return la solution optimale trouvée par Hill Climbing
+     * @return la solution optimale trouvée par Hill Climbing standard
      */
     public List<Objet> solve (SacADos sac, List<Objet> sol_initiale){ // sol_initiale : sol par glouton 
         List<Objet>  solution = new ArrayList<>(sol_initiale);
@@ -122,6 +123,46 @@ public class HillClimbingSolver {
         }
     }
 
+    /**
+     * Variante : meme algo que 'solve' mais les voisins générés sont aléatroire et le nombre de voisins à considérer est un paramètre 
+     * @param sac : sac à dos 
+     * @param sol_initiale : une solution initaile par glouton 
+     * @param k : le nombre de voisin à considérer 
+     */
+
+    public List<Objet> solve_random (SacADos sac, List<Objet> sol_initiale,int k ){
+        List<Objet>  solution = new ArrayList<>(sol_initiale);
+        int fdeS = f_S(solution);
+        if(k<=0){
+            throw new IllegalArgumentException("k doit être strictement positif");
+        }
+        while (true) {
+            List<List<Objet>> voisins_possibles= liste_voisins(sac,solution);
+            if (voisins_possibles.size()==0){ // ie pas de voisins possibles 
+                return solution; 
+            }
+            if (k>voisins_possibles.size()){
+                throw new IllegalArgumentException("k doit être compris entre 0 et la taille de la liste de voisins : "+ voisins_possibles.size());
+            }
+            Collections.shuffle(voisins_possibles);//liste de voisins mélangée aléatoirement
+            List<List<Objet>> voisins_selct = voisins_possibles.subList(0, k);
+            List <Objet> bestvoisin=voisins_selct.get(0);// on prends le 1e voisin de la nouvelle liste de voisins
+            int fdeS_max= f_S(bestvoisin);
+            for (int i = 1; i< voisins_selct.size(); i++) {
+                List<Objet> V= voisins_selct.get(i);
+                int fdeV = f_S(V);
+                if (fdeV>fdeS_max){
+                    fdeS_max=fdeV;
+                    bestvoisin=V;
+                }
+            }
+            if (fdeS_max<=fdeS){
+                return solution;
+            }
+            solution=bestvoisin;
+            fdeS=fdeS_max;
+        }
+    }
 }// class
 
 
