@@ -6,11 +6,9 @@ import fr.GooseQuack.sacados.Objet;
 import fr.GooseQuack.sacados.SacADosCalculs;
 
 /**
- * Classe d'un sac à dos (problème du sac à dos multidimensionnel).
+ * Classe implémentant le critère formel de comparaison par le max (f_max).
  * 
  * @author Drys (lidr05)
- * @author William (miwate)
- * 
  * @version 1.0
  */
 
@@ -27,7 +25,6 @@ public class ComparatorfMax implements Comparator<Objet> {
      */
     @Override
     public int compare(Objet o1, Objet o2) {
-
         if (o1 == null || o2 == null) {
             throw new IllegalArgumentException("Les objets ne doivent pas être null");
         }
@@ -36,17 +33,18 @@ public class ComparatorfMax implements Comparator<Objet> {
         int maxCout1 = SacADosCalculs.maxCouts(o1.getCouts());
         int maxCout2 = SacADosCalculs.maxCouts(o2.getCouts());
 
-        // Produit en croix (preuve dans le rapport)
-        long produit1 = (long) o1.getUtilite() * maxCout2;
-        long produit2 = (long) o2.getUtilite() * maxCout1;
+        double f_max1 = o1.getUtilite() / (double) maxCout1;
+        double f_max2 = o2.getUtilite() / (double) maxCout2;
 
-        int result = Long.compare(produit2, produit1); //Ordre décroissant
-
-        //On utilise l'utilité si il y a égalité
-        if (result == 0) {
+        if (f_max1 > f_max2) {
+            return -1; // Ordre décroissant
+        }
+        else if (f_max1 < f_max2) {
+            return 1;
+        }
+        else {
             return Integer.compare(o2.getUtilite(), o1.getUtilite());
         }
-        return result;
-        }
+    }
 
 }
