@@ -8,8 +8,7 @@ import fr.GooseQuack.sacados.Objet;
 import fr.GooseQuack.sacados.SacADos;
 
 /**
- * Solveur utilisant la méthode gloutonne par ajout
- * 
+ * Classe de la méthode gloutonne par Ajout (en fonction d'un comparateur choisi). 
  * @author Drys (lidr05)
  * @version 1.0
  */
@@ -21,10 +20,20 @@ public class GloutonAjoutSolver {
      * Résout le problème du sac à dos multidimensionnel par la méthode gloutonne par ajout
      *
      * @param sac le sac à dos
-     * @param comparator le comparateur utilisé
-     * @return une liste d'objets pour la solution gloutonne
+     * @param comparator le comparateur (critère utilisé)
+     * @return une solution au problème
+     * @throws IllegalArgumentException si un argument est null
      */
+
     public List<Objet> MethodeParAjout(SacADos sac, Comparator<Objet> comparator) {
+        if (sac == null) {
+            throw new IllegalArgumentException("Le sac ne doit pas être null");
+        }
+
+        if (comparator == null) {
+            throw new IllegalArgumentException("Les comparateurs ne doivent pas être null");
+        }
+
         List<Objet> objetsTriTmp = new ArrayList<>(sac.getObjets());
         objetsTriTmp.sort(comparator);
 
@@ -43,14 +52,14 @@ public class GloutonAjoutSolver {
 
         return S;
     }
-
+    
     /**
-     * Vérifie si l'ajout d'un objet respecte les contraintes de budget
+     * Vérifie si la somme des coûts est bien inférieure au budget
      *
-     * @param o l'objet candidat
-     * @param coutsTotal les coûts totaux actuels
-     * @param budgets les budgets maximums
-     * @return true si l'ajout de l'objet ne dépasse aucun budget, sinon false
+     * @param o objet étudié
+     * @param coutsTotal tableau des coûts totaux
+     * @param budgets tableau des budgets
+     * @return true si la condition est vérifiée, false sinon
      */
     public boolean sommeCoutsInfBudget(Objet o, int[] coutsTotal, int[] budgets) {
         int coutsO[] = o.getCouts();
@@ -65,10 +74,10 @@ public class GloutonAjoutSolver {
     }
 
     /**
-     * Met à jour les coûts totaux en ajoutant les coûts d'un objet
+     * Met à jour le tableau des coûts totaux
      *
-     * @param o l'objet
-     * @param coutsTotal les coûts totaux à mettre à jour
+     * @param o objet étudié
+     * @param coutsTotal tableau des coûts totaux
      */
     private void changementsCouts(Objet o, int[] coutsTotal){
         int[] coutsO = o.getCouts();
