@@ -11,6 +11,7 @@ import fr.GooseQuack.sacados.SacADos;
  * Classe HillClimbing
  * 
  * @author Christian (christianlikq-del)
+ * @author Drys (lidr05)
  */
 
 public class HillClimbingSolver {
@@ -101,6 +102,7 @@ public class HillClimbingSolver {
 
         while (true){
             List<List<Objet>> voisins_possibles= liste_voisins(sac,solution);
+
             if (voisins_possibles.size()==0){ // ie pas de voisins possibles 
                 return solution; 
             }
@@ -130,7 +132,7 @@ public class HillClimbingSolver {
      * @param k : le nombre de voisin à considérer 
      */
 
-    public List<Objet> solve_random (SacADos sac, List<Objet> sol_initiale,int k ){
+    public List<Objet> solve_random (SacADos sac, List<Objet> sol_initiale,int k){
         List<Objet>  solution = new ArrayList<>(sol_initiale);
         int fdeS = f_S(solution);
         if(k<=0){
@@ -142,15 +144,16 @@ public class HillClimbingSolver {
                 return solution; 
             }
             if (k>voisins_possibles.size()){
-                throw new IllegalArgumentException("k doit être compris entre 0 et la taille de la liste de voisins : "+ voisins_possibles.size());
+                System.out.println("k est trop grand, choisissons " + voisins_possibles.size() + " (le nombre de voisins possibles)");
             }
+            int nbVoisinsAExplorer = Math.min(k, voisins_possibles.size());
             Collections.shuffle(voisins_possibles);//liste de voisins mélangée aléatoirement
-            List<List<Objet>> voisins_selct = voisins_possibles.subList(0, k);
+            List<List<Objet>> voisins_selct = voisins_possibles.subList(0, nbVoisinsAExplorer);
             List <Objet> bestvoisin=voisins_selct.get(0);// on prends le 1e voisin de la nouvelle liste de voisins
             int fdeS_max= f_S(bestvoisin);
             for (int i = 1; i< voisins_selct.size(); i++) {
                 List<Objet> V= voisins_selct.get(i);
-                int fdeV = f_S(V);
+                int fdeV = f_S(V);  
                 if (fdeV>fdeS_max){
                     fdeS_max=fdeV;
                     bestvoisin=V;
@@ -164,12 +167,3 @@ public class HillClimbingSolver {
         }
     }
 }// class
-
-
-
-
-
-
-
-
-

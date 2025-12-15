@@ -112,12 +112,12 @@ public class Main {
      */
     public static void simulationEquipe(Scanner scanner) {
         // Instances d'exemple :
-        Elu elu = new Elu("Agnes", "Air", 34);
-        Evaluateur evaluateurEco = new Evaluateur("Blud","Bob", 33, Cout.ECONOMIQUE);
-        Evaluateur evaluateurSocial = new Evaluateur("Calculator","Cartman", 32, Cout.SOCIAL);
-        Evaluateur evaluateurEnvironnement = new Evaluateur("Derik","Daniel", 31, Cout.ENVIRONNEMENTAL);
-        Expert expertSportSante = new Expert("Einstein", "Eric", 30, Secteur.SANTE, Secteur.SANTE);
-        Expert expertCultureEco= new Expert("Foo", "Foobar", 31, Secteur.CULTURE, Secteur.ATTRACTIVITE_ECONOMIQUE);
+        Elu elu = new Elu("Gilbert", "Hugo", 34);
+        Evaluateur evaluateurEco = new Evaluateur("Gilbart","Huga", 33, Cout.ECONOMIQUE);
+        Evaluateur evaluateurSocial = new Evaluateur("Gilbort","Hugues", 32, Cout.SOCIAL);
+        Evaluateur evaluateurEnvironnement = new Evaluateur("Gilbirt","Hugwo", 31, Cout.ENVIRONNEMENTAL);
+        Expert expertSportSante = new Expert("Gilbertss", "Hugoss", 30, Secteur.SANTE, Secteur.SANTE);
+        Expert expertCultureEco= new Expert("Gilbertce", "Hugoce", 31, Secteur.CULTURE, Secteur.ATTRACTIVITE_ECONOMIQUE);
 
         // Ajout des membres dans l'equipe :
         EquipeMunicipale equipe = new EquipeMunicipale();
@@ -158,12 +158,12 @@ public class Main {
      */
     public static void simulationEquipeBudgetPerso(Scanner scanner) {
         // Instances d'exemple :
-        Elu elu = new Elu("Galilee", "Golshin", 34);
-        Evaluateur evaluateurEco = new Evaluateur("Haru","Hishin", 33, Cout.ECONOMIQUE);
-        Evaluateur evaluateurSocial = new Evaluateur("Ibai","Iteration", 32, Cout.SOCIAL);
-        Evaluateur evaluateurEnvironnement = new Evaluateur("Jack","Jacques", 31, Cout.ENVIRONNEMENTAL);
-        Expert expertSportSante = new Expert("Kawakami", "Keras", 30, Secteur.SANTE, Secteur.SANTE);
-        Expert expertCultureEco= new Expert("Matikanefukukitaru", "Mayano", 31, Secteur.CULTURE, Secteur.ATTRACTIVITE_ECONOMIQUE);
+        Elu elu = new Elu("Gilbert", "Hugo", 34);
+        Evaluateur evaluateurEco = new Evaluateur("Gilbart","Huga", 33, Cout.ECONOMIQUE);
+        Evaluateur evaluateurSocial = new Evaluateur("Gilbort","Hugues", 32, Cout.SOCIAL);
+        Evaluateur evaluateurEnvironnement = new Evaluateur("Gilbirt","Hugwo", 31, Cout.ENVIRONNEMENTAL);
+        Expert expertSportSante = new Expert("Gilbertss", "Hugoss", 30, Secteur.SANTE, Secteur.SANTE);
+        Expert expertCultureEco= new Expert("Gilbertce", "Hugoce", 31, Secteur.CULTURE, Secteur.ATTRACTIVITE_ECONOMIQUE);
 
         // Ajout des membres dans l'equipe :
         EquipeMunicipale equipe = new EquipeMunicipale();
@@ -439,16 +439,46 @@ public class Main {
                 ComparatorfMax comparatorMax = new ComparatorfMax();
                 List<Objet> solutionInitiale = solutionAjout.MethodeParAjout(sac, comparatorMax);
                 int utiliteInitiale = SacADosCalculs.sommeUtilite(solutionInitiale);
-
                 System.out.println("Solution initiale créée.");
 
-                // Hill Climbing    
-                System.out.println("\tLancement de l'algorithme Hill Climbing...");
+                // Choix du Hill Climbing
+                System.out.println("== Choix de l'algorithme : Hill Climbing");
+                System.out.println("{1} Hill Climbing classique");
+                System.out.println("{2} Hill Climbing stochastique");
+
+                int choixHillClimbing = -1;
+                boolean choixHillClimbingGF = false; // Garde-fous de la saisie utilisateur
+                while (!choixHillClimbingGF) {
+                    try {
+                        String entreeHillClimbing = scanner.nextLine().trim();
+                        if (!entreeHillClimbing.isEmpty()) {
+                            choixHillClimbing = Integer.parseInt(entreeHillClimbing);
+
+                            if (choixHillClimbing == 1 || choixHillClimbing == 2) {
+                                choixHillClimbingGF = true;
+                            }
+                            else {
+                                System.out.println("Entrée invalide, entrez 1 ou 2.");
+                            }
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Entrée invalide (entier nécessaire), entrez 1 ou 2.");
+                    }
+                }
+                // Hill Climbing
                 HillClimbingSolver hillClimbing = new HillClimbingSolver();
 
-                solutionS = hillClimbing.solve(sac, solutionInitiale);
-                int utiliteS = SacADosCalculs.sommeUtilite(solutionS);
+                if (choixHillClimbing == 1) {
+                    System.out.println("-- Exécution du Hill Climbing classique...");
+                    solutionS = hillClimbing.solve(sac, solutionInitiale);
+                }
+                else {
+                    int k = entier(scanner, "Nombre de voisins k à explorer ? ");
+                    System.out.println("-- Exécution du Hill Climbing stochastique (k=" + k + ")...");
+                    solutionS = hillClimbing.solve_random(sac, solutionInitiale, k);
+                }
 
+                int utiliteS = SacADosCalculs.sommeUtilite(solutionS);    
                 int gain = utiliteS - utiliteInitiale;
                 if (gain > 0) {
                     System.out.println("--> Amélioration de +" + gain + " !");
