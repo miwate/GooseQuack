@@ -34,7 +34,7 @@ public class Objet {
     public Objet(int utilite, int[] couts) {
 
         if (utilite < 0) {
-            throw new IllegalArgumentException("L'utilité doit être positif");
+            throw new IllegalArgumentException("L'utilité doit être positive");
         }
         if (couts == null || couts.length == 0) {
             throw new IllegalArgumentException("Le tableau des coûts doit être non vide");
